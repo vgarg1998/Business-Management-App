@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!--Adding styles to make different shapes for shapeable image view-->
+
+    <style name="ImageStyle_Circle">
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">rounded</item> <!--possible values are rounded, cut-->
+    </style>
+
+    <style name="ImageStyle_Corners_Rounded">
+        <item name="cornerSize">20dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ImageStyle_Corners_Cut">
+        <item name="cornerSize">20dp</item>
+        <item name="cornerFamily">cut</item>
+    </style>
+
+    <style name="ImageStyle_Corners_Cut_Square">
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">cut</item>
+    </style>
+
+    <style name="ImageStyle_Corners_Rounded_Top_Right">
+        <item name="cornerSizeTopRight">60%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ImageStyle_Corners_Rounded_Top_Right_Botom_Left">
+        <item name="cornerSizeTopRight">60%</item>
+        <item name="cornerSizeBottomLeft">60%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ImageStyle_Corners_Cut_Top_Right_Botom_Left">
+        <item name="cornerSizeTopRight">50%</item>
+        <item name="cornerSizeBottomLeft">50%</item>
+        <item name="cornerFamily">cut</item>
+    </style>
+</resources>
