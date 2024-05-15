@@ -1,4 +1,4 @@
-package edu.northeastern.bhavyaplasticinventory.view.interfaces;
+package edu.northeastern.bhavyaplasticinventory.view.activities;
 
 /**
  * This interface represents the Action applied on a View action

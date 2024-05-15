@@ -1,8 +1,6 @@
 package edu.northeastern.bhavyaplasticinventory.view.actions;
 
-import android.widget.ImageView;
-
-import edu.northeastern.bhavyaplasticinventory.view.interfaces.ShapeChangeAction;
+import edu.northeastern.bhavyaplasticinventory.view.activities.ShapeChangeAction;
 
 public class MakeRound<ImageView extends android.widget.ImageView> implements ShapeChangeAction<ImageView> {
 

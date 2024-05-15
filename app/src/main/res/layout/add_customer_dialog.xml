@@ -30,7 +30,8 @@
             android:layout_height="44dp"
             android:text="ADD CUSTOMER"
             android:gravity="center"
-            android:textColor="@color/button_order_color"
+            android:background="@color/purple_500"
+            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -40,6 +41,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/customer_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -55,6 +57,7 @@
             android:paddingBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/customer_phone_number_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number"
@@ -68,6 +71,7 @@
             android:paddingBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/customer_email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email" />
@@ -80,13 +84,14 @@
             android:paddingBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/gst_number_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="GST Number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/add_customer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
