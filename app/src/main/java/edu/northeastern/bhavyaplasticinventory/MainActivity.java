@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -22,8 +21,8 @@ import android.widget.Toast;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 
-import edu.northeastern.bhavyaplasticinventory.threads.CustomerInputValidationTask;
-import edu.northeastern.bhavyaplasticinventory.view.AddCustomerActivity;
+import edu.northeastern.bhavyaplasticinventory.helpers.DialogBoxHelper;
+import edu.northeastern.bhavyaplasticinventory.threads.AddCustomerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,32 +37,34 @@ public class MainActivity extends AppCompatActivity {
     private void setOnClickListener() {
         CardView customerLayout = findViewById(R.id.card_view_buyer);
         ShapeableImageView addCustomerButton = customerLayout.findViewById(R.id.shapeAble_image_add_purchaser_main);
-        addCustomerButton.setOnTouchListener(new View.OnTouchListener() {
+        setOnTouchAnimation(addCustomerButton);
+        addCustomerButton.setOnClickListener(v -> {
+           // showAddCustomerDialog();
+            View rootView  = getWindow().getDecorView().getRootView();
+            DialogBoxHelper.showAddCustomerDialog(this, rootView.getWidth());
+        });
+    }
+
+    private void setOnTouchAnimation(ShapeableImageView shapeableImageView){
+        shapeableImageView.setOnTouchListener(new View.OnTouchListener() {
+
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         // Set the color or perform any animation when touched
-                        addCustomerButton.setColorFilter(R.color.button_order_color, PorterDuff.Mode.SRC_ATOP);
+                        shapeableImageView.setColorFilter(R.color.button_order_color, PorterDuff.Mode.SRC_ATOP);
                         break;
                     case MotionEvent.ACTION_UP:
                         // Reset the color or animation when touch released
-                        addCustomerButton.clearColorFilter();
+                        shapeableImageView.clearColorFilter();
                         break;
                 }
                 return false; // Return true to indicate that the touch event has been consumed
             }
         });
-        addCustomerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, AddCustomerActivity.class);
-//                startActivity(intent);
-                showAddCustomerDialog();
-            }
-        });
     }
-
     private void showAddCustomerDialog() {
         Dialog addCustomerDialog = new Dialog(this);
         addCustomerDialog.setContentView(R.layout.add_customer_dialog);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 String phoneNumber = phoneNumberEditText.getText().toString();
                 String gstNumber = gstNumberEditText.getText().toString();
                 String email = emailEditText.getText().toString();
-                CustomerInputValidationTask validationTask = new CustomerInputValidationTask(new CustomerInputValidationTask.ValidationListener() {
+                AddCustomerTask validationTask = new AddCustomerTask(new AddCustomerTask.ValidationListener() {
                     @Override
                     public void onValidationResult(boolean isValid) {
                         if(isValid){
