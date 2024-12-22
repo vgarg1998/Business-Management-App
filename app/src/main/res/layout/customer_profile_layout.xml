@@ -5,18 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <View-->
-<!--        android:id="@+id/divider"-->
-<!--        android:layout_width="409dp"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:background="?android:attr/listDivider"-->
-<!--        app:layout_constraintTop_toBottomOf=""-->
-<!--        tools:layout_editor_absoluteY="117dp" />-->
-
     <androidx.cardview.widget.CardView
         android:id="@+id/customer_profile_card"
         android:layout_width="match_parent"
-        android:layout_height="500px"
+        android:layout_height="200dp"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/rounded_corner"
         android:elevation="10px"
@@ -25,28 +17,32 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/Customer_Name_CARD"
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:elevation="10px"
-            app:cardCornerRadius="80px"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+
             >
         <TextView
             android:id="@+id/customer_name"
             android:layout_width="match_parent"
-            android:layout_height="80px"
+            android:layout_height="50dp"
             android:text="Dummy Name"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textColor="@color/purple_700"
             />
+            <Button
+                android:id="@+id/update_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"/>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100px"
-
-
+            android:layout_height="140dp"
+            android:layout_marginTop="50dp"
             >
 
             <TextView
@@ -57,6 +53,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/phone_number_text"
                 app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
                 />
 
             <TextView
@@ -80,49 +77,45 @@
               />
 
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Update"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginRight="10dp"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/customer_profile_card"
-
-        >
         <androidx.cardview.widget.CardView
             android:id="@+id/Product_Card"
             android:layout_width="match_parent"
-            android:layout_height="100px"
-
-            app:cardCornerRadius="80px"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/customer_profile_card"
+            android:layout_marginTop="10dp"
             >
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="80px"
-                android:text="Products"
+                android:layout_height="50dp"
+                android:text="PRODUCTS"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:textColor="@color/purple_700"
+                />
+            <Button
+                android:id="@+id/add_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:onClick="openAddProductDialog"
                 />
 
         </androidx.cardview.widget.CardView>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            />
-    </androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/product_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Product_Card">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

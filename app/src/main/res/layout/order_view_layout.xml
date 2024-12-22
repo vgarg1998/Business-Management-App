@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Order ID -->
+            <TextView
+                android:id="@+id/order_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Order ID: 12345"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date: 12/17/2024"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <!-- Manufacturer -->
+            <TextView
+                android:id="@+id/manufacturer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manufacturer: XYZ Corp"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <!-- Product -->
+            <TextView
+                android:id="@+id/product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Product: Widget A"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <!-- Customer -->
+            <TextView
+                android:id="@+id/customer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer: ABC Ltd."
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <!-- Given Quantity -->
+            <TextView
+                android:id="@+id/given_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ordered Quantity: 100"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <!-- Received Quantity -->
+            <TextView
+                android:id="@+id/received_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Received Quantity: 50"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <!-- Number of Shipments -->
+            <TextView
+                android:id="@+id/num_shipments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number of Shipments: 5"
+                android:textSize="14sp"
+                android:paddingBottom="16dp" />
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btn_add_shipment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Add Shipment"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_push_order"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Received" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,12 +11,13 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
-import android.widget.Toast;
-
 import com.google.android.material.imageview.ShapeableImageView;
 
-import edu.northeastern.MrManage.helpers.DialogBoxHelper;
-import edu.northeastern.MrManage.view.ManageCustomerActivity;
+import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
+import edu.northeastern.MrManage.utility.AppContextHolder;
+import edu.northeastern.MrManage.view.activity.ManageUserActivity;
+import edu.northeastern.MrManage.view.dialogs.AddOrderDialog;
+import edu.northeastern.MrManage.view.dialogs.AddUserDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppContextHolder.init(this);
         setOnClickListener();
     }
 
@@ -33,24 +35,23 @@ public class MainActivity extends AppCompatActivity {
         ShapeableImageView addCustomerButton = customerLayout.findViewById(R.id.shapeAble_image_add_purchaser_main);
         setOnTouchAnimation(addCustomerButton);
         addCustomerButton.setOnClickListener(v -> {
-           // showAddCustomerDialog();
             View rootView  = getWindow().getDecorView().getRootView();
-            DialogBoxHelper.showAddCustomerDialog(this, rootView.getWidth());
+            AddUserDialog.showAddUserDialog(this, rootView.getWidth(),true);
         });
 
         ShapeableImageView manageCustomerButton = customerLayout.findViewById(R.id.shapeAble_image_in_manage_customer_main);
         setOnTouchAnimation(manageCustomerButton);
         manageCustomerButton.setOnClickListener(v->{
-            Toast.makeText(v.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, ManageCustomerActivity.class);
+            Intent intent = new Intent(MainActivity.this, ManageUserActivity.class);
+            intent.putExtra("isCustomer", true);
             startActivity(intent);
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setOnTouchAnimation(ShapeableImageView shapeableImageView){
         shapeableImageView.setOnTouchListener(new View.OnTouchListener() {
-
-
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -68,4 +69,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void createOrderClicked(View view){
+        setOnTouchAnimation((ShapeableImageView) view);
+        View rootView  = getWindow().getDecorView().getRootView();
+        AddOrderDialog.showAddOrderDialog(this, rootView.getWidth());
+    }
+
+    public void activeOrderActivityOnClick(View view){
+        setOnTouchAnimation((ShapeableImageView) view);
+        Intent intent = new Intent(MainActivity.this, ActiveOrderActivity.class);
+        startActivity(intent);
+    }
+
+    public void openAddManufacturerDialog(View view){
+        setOnTouchAnimation((ShapeableImageView) view);
+        View rootView  = getWindow().getDecorView().getRootView();
+        AddUserDialog.showAddUserDialog(this, rootView.getWidth(),false);
+    }
+
+    public void manageManufacturerButton(View view){
+        Intent intent = new Intent(MainActivity.this, ManageUserActivity.class);
+        intent.putExtra("isCustomer", false);
+        startActivity(intent);
+    }
 }

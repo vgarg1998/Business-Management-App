@@ -8,4 +8,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name ="button_order_color">#FF3700B3</color>
+    <color name="colorPrimary">#A8E6CE</color> <!-- Pastel Green -->
+    <color name="colorPrimaryVariant">#5CDB95</color> <!-- Bright Green -->
+    <color name="colorOnPrimary">#000000</color> <!-- Black text on primary -->
+
+    <color name="colorSecondary">#FF8C94</color> <!-- Pastel Pink -->
+    <color name="colorSecondaryVariant">#FF677D</color> <!-- Bright Pink -->
+    <color name="colorOnSecondary">#FFFFFF</color> <!-- White text on secondary -->
+
+    <color name="colorBackground">#FFFBF1</color> <!-- Very Light Pastel Beige -->
+    <color name="colorSurface">#FFFFFF</color> <!-- White surface -->
+    <color name="colorOnSurface">#000000</color> <!-- Black text on surfaces -->
+
+    <color name="colorError">#FF6B6B</color> <!-- Soft Pastel Red -->
+    <color name="colorOnError">#FFFFFF</color> <!-- White text on error -->
 </resources>

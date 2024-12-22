@@ -1,0 +1,73 @@
+package edu.northeastern.MrManage.view.dialogs;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import edu.northeastern.MrManage.R;
+import edu.northeastern.MrManage.threads.AddUserTask;
+import edu.northeastern.MrManage.utility.RoomResponse;
+import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
+
+public class AddUserDialog {
+    public static void showAddUserDialog(Context context, int width, boolean isCustomer) {
+        Dialog addUserDialog = new Dialog(context);
+        addUserDialog.setContentView(R.layout.add_user_layout);
+        addUserDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView userTypeBar = addUserDialog.findViewById(R.id.textView_user_type_bar);
+        if(isCustomer){
+            userTypeBar.setText("ADD CUSTOMER");
+        }else{
+            userTypeBar.setText("ADD MANUFACTURER");
+        }
+        // Set background to transparent
+        addUserDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // Set the width of the dialog to match the width of the activity
+        Window window = addUserDialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(window.getAttributes());
+            layoutParams.width = width; // Set the width here
+            window.setAttributes(layoutParams);
+        }
+        TextInputEditText nameEditText = addUserDialog.findViewById(R.id.user_name_input);
+        TextInputEditText emailEditText = addUserDialog.findViewById(R.id.user_email_input);
+        TextInputEditText phoneNumberEditText = addUserDialog.findViewById(R.id.user_phone_number_input);
+        TextInputEditText gstNumberEditText = addUserDialog.findViewById(R.id.gst_number_input);
+        Button submit = addUserDialog.findViewById(R.id.add_user_button);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameEditText.getText().toString();
+                String phoneNumber = phoneNumberEditText.getText().toString();
+                String gstNumber = gstNumberEditText.getText().toString();
+                String email = emailEditText.getText().toString();
+                AddUserTask addUserTask = new AddUserTask(new ValidationListener() {
+                    @Override
+                    public void onValidationResult(RoomResponse roomResponse) {
+                        if(roomResponse.getIsValid()){
+                            Toast.makeText(addUserDialog.getContext(), roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            addUserDialog.dismiss();
+                        }else{
+                            Toast.makeText(addUserDialog.getContext(), roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+                addUserTask.execute(name, email, phoneNumber, gstNumber,String.valueOf(isCustomer));
+            }
+        });
+        addUserDialog.show();
+    }
+
+
+}
