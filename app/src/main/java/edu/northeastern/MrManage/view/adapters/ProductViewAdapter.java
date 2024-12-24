@@ -24,7 +24,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View productViewHolderLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item_layout,parent,false);
+        View productViewHolderLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item_layout, parent, false);
         return new ProductViewHolder(productViewHolderLayout);
     }
 
@@ -35,8 +35,8 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> 
         holder.deliveredQuantity.setText(String.valueOf(product.getQuantityDelivered()));
         holder.inStockQuantity.setText(String.valueOf(product.getQuantityInInventor()));
         holder.orderedQuantity.setText(String.valueOf(product.getQuantityInOrder()));
-
-
+        holder.totalDeliveredBags.setText(String.valueOf(product.getNumberOfBagsDelivered()));
+        holder.inStockBags.setText(String.valueOf(product.getNumberOfBagsInStock()));
     }
 
     @Override

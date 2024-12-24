@@ -46,7 +46,7 @@ public class Order implements Parcelable {
     private String proposedEndDate;
 
     @ColumnInfo(name = "end_date")
-    private String endDate = null ;
+    private String endDate = null;
 
     public String getProposedEndDate() {
         return proposedEndDate;

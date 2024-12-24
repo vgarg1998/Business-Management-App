@@ -1,24 +1,26 @@
 package edu.northeastern.MrManage;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.annotation.SuppressLint;
-
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import com.google.android.material.imageview.ShapeableImageView;
 
-import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.northeastern.MrManage.utility.AppContextHolder;
+import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
 import edu.northeastern.MrManage.view.activity.ManageUserActivity;
+import edu.northeastern.MrManage.view.dialogs.AddDeliveryDialog;
 import edu.northeastern.MrManage.view.dialogs.AddOrderDialog;
 import edu.northeastern.MrManage.view.dialogs.AddUserDialog;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -35,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
         ShapeableImageView addCustomerButton = customerLayout.findViewById(R.id.shapeAble_image_add_purchaser_main);
         setOnTouchAnimation(addCustomerButton);
         addCustomerButton.setOnClickListener(v -> {
-            View rootView  = getWindow().getDecorView().getRootView();
-            AddUserDialog.showAddUserDialog(this, rootView.getWidth(),true);
+            View rootView = getWindow().getDecorView().getRootView();
+            AddUserDialog.showAddUserDialog(this, rootView.getWidth(), true);
         });
 
         ShapeableImageView manageCustomerButton = customerLayout.findViewById(R.id.shapeAble_image_in_manage_customer_main);
         setOnTouchAnimation(manageCustomerButton);
-        manageCustomerButton.setOnClickListener(v->{
+        manageCustomerButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ManageUserActivity.class);
             intent.putExtra("isCustomer", true);
             startActivity(intent);
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void setOnTouchAnimation(ShapeableImageView shapeableImageView){
+    private void setOnTouchAnimation(ShapeableImageView shapeableImageView) {
         shapeableImageView.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -69,25 +71,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void createOrderClicked(View view){
+    public void createOrderClicked(View view) {
         setOnTouchAnimation((ShapeableImageView) view);
-        View rootView  = getWindow().getDecorView().getRootView();
-        AddOrderDialog.showAddOrderDialog(this, rootView.getWidth());
+        View rootView = getWindow().getDecorView().getRootView();
+        AddOrderDialog addOrderDialog = new AddOrderDialog(this);
+        addOrderDialog.showAddOrderDialog(this, rootView.getWidth());
     }
 
-    public void activeOrderActivityOnClick(View view){
+    public void createDeliveryClicked(View view) {
+        setOnTouchAnimation((ShapeableImageView) view);
+        View rootView = getWindow().getDecorView().getRootView();
+        AddDeliveryDialog addDeliveryDialog = new AddDeliveryDialog(this);
+        AddDeliveryDialog.addDeliveryDialog(MainActivity.this, rootView.getWidth());
+    }
+
+
+    public void activeOrderActivityOnClick(View view) {
         setOnTouchAnimation((ShapeableImageView) view);
         Intent intent = new Intent(MainActivity.this, ActiveOrderActivity.class);
         startActivity(intent);
     }
 
-    public void openAddManufacturerDialog(View view){
+    public void openAddManufacturerDialog(View view) {
         setOnTouchAnimation((ShapeableImageView) view);
-        View rootView  = getWindow().getDecorView().getRootView();
-        AddUserDialog.showAddUserDialog(this, rootView.getWidth(),false);
+        View rootView = getWindow().getDecorView().getRootView();
+        AddUserDialog.showAddUserDialog(this, rootView.getWidth(), false);
     }
 
-    public void manageManufacturerButton(View view){
+    public void manageManufacturerButton(View view) {
         Intent intent = new Intent(MainActivity.this, ManageUserActivity.class);
         intent.putExtra("isCustomer", false);
         startActivity(intent);

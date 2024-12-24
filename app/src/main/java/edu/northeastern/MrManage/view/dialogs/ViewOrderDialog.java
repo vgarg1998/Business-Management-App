@@ -17,7 +17,7 @@ import edu.northeastern.MrManage.view.activity.AddShipmentActivity;
 public class ViewOrderDialog {
 
     @SuppressLint("SetTextI18n")
-    public void showDialog(Context context, Order order, String productName, String customerName, int numberOfShipment, double receivedQuant, int position){
+    public void showDialog(Context context, Order order, String productName, String customerName, int numberOfShipment, double receivedQuant, int position) {
         Dialog dialogView = new Dialog(context);
         dialogView.setContentView(R.layout.order_view_layout);
         // Find views inside the dialog layout
@@ -40,9 +40,9 @@ public class ViewOrderDialog {
         manufacturer.setText("Manufacturer: XYZ Corp");
         product.setText(productName);
         customer.setText(customerName);
-        givenQuantity.setText("Ordered Quantity: "+ order.getOrderedQuantity());
-        receivedQuantity.setText("Received Quantity: "+ receivedQuant);
-        numShipments.setText("Shipments Received: "+ numberOfShipment);
+        givenQuantity.setText("Ordered Quantity: " + order.getOrderedQuantity());
+        receivedQuantity.setText("Received Quantity: " + receivedQuant);
+        numShipments.setText("Shipments Received: " + numberOfShipment);
         dialogView.show();
 
 
@@ -55,9 +55,9 @@ public class ViewOrderDialog {
                 bundle.putString("productName", productName);
                 bundle.putString("customerName", customerName);
                 bundle.putInt("numberOfShipments", numberOfShipment);
-                bundle.putDouble("receivedQuantity",receivedQuant);
-                bundle.putInt("position",position);
-                intent.putExtra("order",order);
+                bundle.putDouble("receivedQuantity", receivedQuant);
+                bundle.putInt("position", position);
+                intent.putExtra("order", order);
                 intent.putExtras(bundle);
                 ((Activity) context).startActivityForResult(intent, 101);
                 dialogView.dismiss();

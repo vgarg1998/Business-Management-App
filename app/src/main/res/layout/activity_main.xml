@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Customer"
+                    android:text="CUSTOMER"
                     android:textSize="20sp" />
 
             </androidx.cardview.widget.CardView>
@@ -115,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Manufacturer"
+                    android:text="MANUFACTURER"
                     android:textSize="20sp" />
 
             </androidx.cardview.widget.CardView>
@@ -170,22 +170,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="SALES"
+                    android:text="DELIVERIES"
                     android:textSize="20sp" />
-                                        
+
 
             </androidx.cardview.widget.CardView>
 
-            <include layout="@layout/two_option_layout_sales" />
+            <include layout="@layout/two_option_layout_delivery" />
 
         </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 
 </ScrollView>

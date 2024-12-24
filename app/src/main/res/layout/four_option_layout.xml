@@ -29,8 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
             app:strokeWidth="1dp"
-            android:onClick="createOrderClicked"
-            />
+            android:onClick="createOrderClicked" />
 
         <TextView
             android:id="@+id/create_text_view"
@@ -67,7 +66,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
             app:strokeWidth="1dp"
-            android:onClick="activeOrderActivityOnClick"/>
+            android:onClick="activeOrderActivityOnClick" />
 
         <TextView
             android:id="@+id/update_text_view"

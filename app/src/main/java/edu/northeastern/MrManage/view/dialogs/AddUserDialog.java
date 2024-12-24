@@ -11,10 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import edu.northeastern.MrManage.Executors.AddUserRunnable;
+import edu.northeastern.MrManage.MainActivity;
 import edu.northeastern.MrManage.R;
-import edu.northeastern.MrManage.threads.AddUserTask;
+import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
 import edu.northeastern.MrManage.utility.RoomResponse;
 import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
 
@@ -24,9 +31,9 @@ public class AddUserDialog {
         addUserDialog.setContentView(R.layout.add_user_layout);
         addUserDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView userTypeBar = addUserDialog.findViewById(R.id.textView_user_type_bar);
-        if(isCustomer){
+        if (isCustomer) {
             userTypeBar.setText("ADD CUSTOMER");
-        }else{
+        } else {
             userTypeBar.setText("ADD MANUFACTURER");
         }
         // Set background to transparent
@@ -51,19 +58,25 @@ public class AddUserDialog {
                 String phoneNumber = phoneNumberEditText.getText().toString();
                 String gstNumber = gstNumberEditText.getText().toString();
                 String email = emailEditText.getText().toString();
-                AddUserTask addUserTask = new AddUserTask(new ValidationListener() {
+
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                String[] userDetails = {name, email, phoneNumber, gstNumber, String.valueOf(isCustomer)};
+
+                executorService.submit(new AddUserRunnable(new ViewModelProvider((MainActivity) context).get(UserViewModel.class), userDetails, new ValidationListener() {
                     @Override
                     public void onValidationResult(RoomResponse roomResponse) {
-                        if(roomResponse.getIsValid()){
-                            Toast.makeText(addUserDialog.getContext(), roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        // Handle result on UI thread
+                        if (roomResponse.getIsValid()) {
+                            Toast.makeText(context, roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             addUserDialog.dismiss();
-                        }else{
-                            Toast.makeText(addUserDialog.getContext(), roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
-
+                        } else {
+                            Toast.makeText(context, roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
-                addUserTask.execute(name, email, phoneNumber, gstNumber,String.valueOf(isCustomer));
+                }));
+
+// Shutdown executor when no longer needed
+                executorService.shutdown();
             }
         });
         addUserDialog.show();

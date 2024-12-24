@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity(tableName = "User",
-        indices = {@Index(value = "email_id", unique = true), @Index(value = "name",unique = true),@Index(value = "phone_number", unique = true),
-                @Index(value = "gst_number",unique = true)})
+        indices = {@Index(value = "email_id", unique = true), @Index(value = "name", unique = true), @Index(value = "phone_number", unique = true),
+                @Index(value = "gst_number", unique = true)})
 public class User implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -33,10 +33,11 @@ public class User implements Serializable {
 
     public User() {
     }
+
     @Ignore
     public User(User.UserBuilder userBuilder) {
         this.id = userBuilder.id;
-        this.name =userBuilder.name;
+        this.name = userBuilder.name;
         this.phone_number = userBuilder.phone_number;
         this.email_id = userBuilder.email_id;
         this.gst_number = userBuilder.gst_number;
@@ -91,7 +92,7 @@ public class User implements Serializable {
         return isCustomer;
     }
 
-    public static class UserBuilder{
+    public static class UserBuilder {
         private Long id;
         private String name;
         private String phone_number;
@@ -103,37 +104,37 @@ public class User implements Serializable {
         public UserBuilder() {
         }
 
-        public User.UserBuilder id(Long id){
+        public User.UserBuilder id(Long id) {
             this.id = id;
             return this;
         }
 
-        public User.UserBuilder name(String name){
+        public User.UserBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public User.UserBuilder phone_number(String phone_number){
+        public User.UserBuilder phone_number(String phone_number) {
             this.phone_number = phone_number;
             return this;
         }
 
-        public User.UserBuilder email_id(String email_id){
+        public User.UserBuilder email_id(String email_id) {
             this.email_id = email_id;
             return this;
         }
 
-        public User.UserBuilder gst_number(String gst_number){
+        public User.UserBuilder gst_number(String gst_number) {
             this.gst_number = gst_number;
             return this;
         }
 
-        public User.UserBuilder isCustomer(boolean isCustomer){
+        public User.UserBuilder isCustomer(boolean isCustomer) {
             this.isCustomer = isCustomer;
             return this;
         }
 
-        public User build(){
+        public User build() {
             return new User(this);
         }
     }

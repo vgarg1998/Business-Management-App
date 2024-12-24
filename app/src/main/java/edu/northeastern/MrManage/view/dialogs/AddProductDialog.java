@@ -11,16 +11,22 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import edu.northeastern.MrManage.Executors.AddProductRunnable;
 import edu.northeastern.MrManage.R;
-import edu.northeastern.MrManage.threads.AddProductTask;
-import edu.northeastern.MrManage.utility.RoomResponse;
-import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
+import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
+import edu.northeastern.MrManage.view.activity.CustomerProfileActivity;
 import edu.northeastern.MrManage.view.adapters.ProductViewAdapter;
 
-public class AddProductDialog{
+public class AddProductDialog {
+
+    private ProductViewModel productViewModel;
 
     public static void addProductDialog(@NonNull Context context, int width, Long customer_id, ProductViewAdapter productViewAdapter) {
         Dialog addProductDialog = new Dialog(context);
@@ -36,7 +42,6 @@ public class AddProductDialog{
             window.setAttributes(layoutParams);
         }
         addProductDialog.show();
-
         Button submit = addProductDialog.findViewById(R.id.add_product_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,20 +50,18 @@ public class AddProductDialog{
                 TextInputEditText productTypeEditText = addProductDialog.findViewById(R.id.product_type_input);
                 String productName = productNameEditText.getText().toString().toUpperCase();
                 String productType = productTypeEditText.getText().toString().toUpperCase();
-                AddProductTask addProductTask = new AddProductTask(new ValidationListener() {
-                    @Override
-                    public void onValidationResult(RoomResponse roomResponse) {
-                        if(roomResponse.getIsValid()){
-                            //success
-                            Toast.makeText(addProductDialog.getContext(),roomResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                            addProductDialog.dismiss();
-                        }else{
-                            Toast.makeText(addProductDialog.getContext(),roomResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },productViewAdapter);
-                addProductTask.execute(String.valueOf(customer_id),productName,productType);
 
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+                executorService.submit(new AddProductRunnable(new ViewModelProvider((CustomerProfileActivity) context).get(ProductViewModel.class), new String[]{String.valueOf(customer_id), productName, productType}, productViewAdapter, (roomResponse) -> {
+                    if (roomResponse.getIsValid()) {
+                        Toast.makeText(addProductDialog.getContext(), roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        addProductDialog.dismiss();
+                    } else {
+                        Toast.makeText(addProductDialog.getContext(), roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }));
+                executorService.shutdown();
             }
         });
     }

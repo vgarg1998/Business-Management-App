@@ -1,5 +1,6 @@
 package edu.northeastern.MrManage.roomApi.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -15,14 +16,14 @@ public interface ProductDao {
     @Insert
     void insertProduct(Product product);
 
-    @Query("Select * from Product where customer_id = :customerId" )
-    List<Product> getProducts(Long customerId);
+    @Query("Select * from Product where customer_id = :customerId")
+    LiveData<List<Product>> getProducts(Long customerId);
 
     @Query("UPDATE Product SET quantity_in_order = :quantity + quantity_in_order WHERE product_id = :productId")
     void updateOrderedQuantity(String productId, String quantity);
 
     @Query("SELECT product_name as productName, customer_id as customerId FROM Product WHERE product_id = :productId")
-    ProductCustomer getProductName(Long productId);
+    ProductCustomer getProductNameAndCustomerId(Long productId);
 
 
     // Method to update number_of_bags_delivered

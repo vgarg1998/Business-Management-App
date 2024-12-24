@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
@@ -27,18 +28,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import edu.northeastern.MrManage.Executors.AddOrderRunnable;
+import edu.northeastern.MrManage.MainActivity;
 import edu.northeastern.MrManage.R;
-import edu.northeastern.MrManage.roomApi.MrManageDatabase;
 import edu.northeastern.MrManage.roomApi.entities.Product;
 import edu.northeastern.MrManage.roomApi.entities.User;
-import edu.northeastern.MrManage.threads.AddOrderTask;
-import edu.northeastern.MrManage.utility.RoomResponse;
-import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
+import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
+import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
+import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
 
-public class AddOrderDialog{
 
-    public static void showAddOrderDialog(Context context, int width) {
+public class AddOrderDialog {
+
+    final Context context;
+
+    static UserViewModel userViewModel;
+
+    static OrderViewModel orderViewModel;
+    static ProductViewModel productViewModel;
+
+    public AddOrderDialog(Context context) {
+        this.context = context;
+        userViewModel = new ViewModelProvider((MainActivity) context).get(UserViewModel.class);
+        orderViewModel = new ViewModelProvider((MainActivity) context).get(OrderViewModel.class);
+        productViewModel = new ViewModelProvider((MainActivity) context).get(ProductViewModel.class);
+    }
+
+    public void showAddOrderDialog(Context context, int width) {
         Dialog addOrderDialog = new Dialog(context);
         addOrderDialog.setContentView(R.layout.create_order_dialog);
         // Set background to transparent
@@ -53,38 +72,38 @@ public class AddOrderDialog{
         }
         addOrderDialog.show();
         Button submit = addOrderDialog.findViewById(R.id.add_order_button);
-        setOnSubmitClickEvent(addOrderDialog,context,submit);
-        setUpDynamicDialogDisplay(addOrderDialog,context);
+        setOnSubmitClickEvent(addOrderDialog, context, submit);
+        setUpDynamicDialogDisplay(addOrderDialog, context);
 
 
     }
 
-    private static void setOnSubmitClickEvent(Dialog dialog,Context context,Button submit) {
+    private static void setOnSubmitClickEvent(Dialog dialog, Context context, Button submit) {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TextView proposedDeliveryDate = dialog.findViewById(R.id.delivery_date_text);
-                Log.d("Clicked","Add Order Button Clicked");
+                Log.d("Clicked", "Add Order Button Clicked");
                 Spinner productSpinner = dialog.findViewById(R.id.product_spinner);
                 Product selectedProduct = (Product) productSpinner.getSelectedItem();
                 Spinner manufacturerSpinner = dialog.findViewById(R.id.manufacturer_spinner);
                 User selectedManufacturer = (User) manufacturerSpinner.getSelectedItem();
                 TextInputEditText quantityEditText = dialog.findViewById(R.id.order_quantity_input);
-
-                AddOrderTask addOrderTask = new AddOrderTask(new ValidationListener() {
-                    @Override
-                    public void onValidationResult(RoomResponse roomResponse) {
-                        Log.d("Validation:Order", "Evaluating Validation listener response");
-                        if(roomResponse.getIsValid()){
-                            Toast.makeText(context,roomResponse.getMessage(),Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-                        }else{
-                            Toast.makeText(context,roomResponse.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.submit(new AddOrderRunnable(new ViewModelProvider((MainActivity) context).get(OrderViewModel.class),
+                        new ViewModelProvider((MainActivity) context).get(ProductViewModel.class)
+                        , new String[]{selectedProduct.getProductId().toString(),
+                        String.valueOf(selectedManufacturer.getId()),
+                        quantityEditText.getText().toString().trim(),
+                        proposedDeliveryDate.getText().toString().trim()}, roomResponse -> {
+                    if (roomResponse.getIsValid()) {
+                        Toast.makeText(context, roomResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(context, roomResponse.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                });
-                addOrderTask.execute(selectedProduct.getProductId().toString(), String.valueOf(selectedManufacturer.getId()),quantityEditText.getText().toString().trim(), proposedDeliveryDate.getText().toString().trim() );
+                }));
+                executorService.shutdown();
             }
         });
         TextView proposedDeliveryDate = dialog.findViewById(R.id.delivery_date_text);
@@ -103,7 +122,6 @@ public class AddOrderDialog{
         // Show the Date Picker when the button is clicked
         proposedDeliveryDateButton.setOnClickListener(v -> datePicker.show(activity.getSupportFragmentManager(), "DATE_PICKER"));
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            String selectedDate = datePicker.getHeaderText(); // Formatted date
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String formattedDate = sdf.format(new Date(selection));
             proposedDeliveryDate.setText(formattedDate);
@@ -115,66 +133,42 @@ public class AddOrderDialog{
         Spinner spinner = dialog.findViewById(R.id.customer_spinner);
         Spinner productSpinner = dialog.findViewById(R.id.product_spinner);
         Spinner manufacturerSpinner = dialog.findViewById(R.id.manufacturer_spinner);
-        new Thread(()->{
-            List<User> customers = new ArrayList<>();
-            customers.add(new User()); //act as blank customer
-            customers.addAll(MrManageDatabase.getINSTANCE(context).userDao().getAllCustomers());
-            ((AppCompatActivity)context).runOnUiThread(()->{
-                // 3. Create an ArrayAdapter for Customer objects
-                ArrayAdapter<User> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, customers);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-            });
-        }).start();
+
+        setCustomerSpinner(spinner, context);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (position != 0) {
-                    User selectedCustomer = (User) spinner.getSelectedItem();
-                    Long customerId = selectedCustomer.getId();
-                    new Thread(()->{
-                        List<Product> products = new ArrayList<>();
-                        products.add(new Product());
-                        products.addAll(MrManageDatabase.getINSTANCE(context).productDao().getProducts(customerId));
-                        ((AppCompatActivity)context).runOnUiThread(()->{
-                            ArrayAdapter<Product> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, products);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            productSpinner.setAdapter(adapter);
-                            dialog.findViewById(R.id.product_linear_view).setVisibility(View.VISIBLE);
-                        });
-                    }).start();
-                }else{
-                    dialog.findViewById(R.id.product_linear_view).setVisibility(View.INVISIBLE);
-                    dialog.findViewById(R.id.manufacturer_linear_view).setVisibility(View.INVISIBLE);
-                    dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
-                }
-            }
+                User selectedCustomer = (User) spinner.getSelectedItem();
+                Long customerId = selectedCustomer.getId();
 
+                List<Product> products = new ArrayList<>();
+                products.add(new Product());
+                productViewModel.getProducts(customerId).observe((MainActivity) context, allProducts -> {
+                    products.addAll(allProducts);
+                    ArrayAdapter<Product> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, products);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    productSpinner.setAdapter(adapter);
+                    dialog.findViewById(R.id.product_linear_view).setVisibility(View.VISIBLE);
+                });
+
+            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing
+                dialog.findViewById(R.id.product_linear_view).setVisibility(View.INVISIBLE);
+                dialog.findViewById(R.id.manufacturer_linear_view).setVisibility(View.INVISIBLE);
+                dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
             }
         });
 
         productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
+                if (position != 0) {
                     dialog.findViewById(R.id.manufacturer_linear_view).setVisibility(View.VISIBLE);
-                    new Thread(()->{
-                        List<User> manufacturers = new ArrayList<>();
-                        manufacturers.add(new User()); //act as blank customer
-                        manufacturers.addAll(MrManageDatabase.getINSTANCE(context).userDao().getAllManufacturers());
-                        ((AppCompatActivity)context).runOnUiThread(()->{
-                            // 3. Create an ArrayAdapter for Customer objects
-                            ArrayAdapter<User> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, manufacturers);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            manufacturerSpinner.setAdapter(adapter);
-                        });
-                    }).start();
-                }else{
+                    setManufacturerSpinner(manufacturerSpinner, context);
+                } else {
                     dialog.findViewById(R.id.manufacturer_linear_view).setVisibility(View.INVISIBLE);
                     dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
                 }
@@ -189,21 +183,42 @@ public class AddOrderDialog{
         manufacturerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
-                    dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.VISIBLE);
-                }else{
-                    dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
-                }
+
+                dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
             }
         });
 
 
+    }
 
+    private static void setCustomerSpinner(Spinner spinner, Context context) {
+        userViewModel.getAllCustomer().observe((MainActivity) context, customers -> {
+            ArrayAdapter<User> adapter = new ArrayAdapter<>(
+                    context,
+                    android.R.layout.simple_spinner_item,
+                    customers
+            );
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+        });
+    }
 
+    private static void setManufacturerSpinner(Spinner spinner, Context context) {
+        userViewModel.getAllManufacturers().observe((MainActivity) context, manufacturers -> {
+
+            ArrayAdapter<User> adapter = new ArrayAdapter<>(
+                    context,
+                    android.R.layout.simple_spinner_item,
+                    manufacturers
+            );
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+        });
     }
 }

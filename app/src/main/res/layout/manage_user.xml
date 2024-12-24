@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -17,8 +16,8 @@
         android:layout_marginTop="10px"
         app:cardCornerRadius="80px"
 
-        android:elevation="-15px"
-        >
+        android:elevation="-15px">
+
         <TextView
             android:id="@+id/search_text"
             android:layout_width="match_parent"
@@ -32,11 +31,9 @@
             android:layout_marginBottom="10px"
             android:layout_height="150px"
             android:text="Search..."
-            android:elevation="5px"
-         />
+            android:elevation="5px" />
 
     </androidx.cardview.widget.CardView>
-
 
 
     <androidx.recyclerview.widget.RecyclerView

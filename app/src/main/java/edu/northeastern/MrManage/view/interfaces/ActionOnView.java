@@ -9,6 +9,7 @@ public interface ActionOnView<E> {
 
     /**
      * This method is used to return the view id assigned.
+     *
      * @param e integer value
      * @return
      */

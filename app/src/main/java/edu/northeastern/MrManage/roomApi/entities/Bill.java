@@ -7,12 +7,8 @@ public class Bill {
     private Long billId;
 
 
-
     @ColumnInfo(name = "order_date")
     private String billDate;
-
-
-
 
 
 }

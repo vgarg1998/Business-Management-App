@@ -11,6 +11,7 @@ import edu.northeastern.MrManage.R;
 public class UserViewHolder extends RecyclerView.ViewHolder {
     //This is where the attributes sit and gets assigned
     public TextView userName;
+
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
         userName = itemView.findViewById(R.id.user_name);

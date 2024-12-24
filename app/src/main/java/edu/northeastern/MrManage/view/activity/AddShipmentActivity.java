@@ -10,17 +10,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.RoomDatabase;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
-import org.w3c.dom.Text;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import edu.northeastern.MrManage.Executors.AddOrderRunnable;
+import edu.northeastern.MrManage.Executors.AddShipmentRunnable;
 import edu.northeastern.MrManage.R;
 import edu.northeastern.MrManage.roomApi.MrManageDatabase;
 import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.entities.Shipment;
+import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
+import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
+import edu.northeastern.MrManage.roomApi.view_model.ShipmentViewModel;
+import edu.northeastern.MrManage.view.dialogs.AddOrderDialog;
 
+
+@AndroidEntryPoint
 public class AddShipmentActivity extends AppCompatActivity {
-
 
 
     @Override
@@ -56,77 +66,41 @@ public class AddShipmentActivity extends AppCompatActivity {
         int position = bundle.getInt("position");
 
 
-
-
         submitButton.setOnClickListener(v -> {
             boolean flag = true;
-             String shipmentTypeStr = spinner.getSelectedItem().toString();
+            String shipmentTypeStr = spinner.getSelectedItem().toString();
             //1 for customer, 0 for warehouse
             int shipmentType = 1;
-            if(shipmentTypeStr.equals("Received at Warehouse")){
+            if (shipmentTypeStr.equals("Received at Warehouse")) {
                 shipmentType = 0;
             }
 
             String numberOfBagsStr = editTextNumberOfBags.getText().toString().trim();
             String totalWeightStr = editTextTotalWeight.getText().toString().trim();
             String transitCostStr = editTextTransitCost.getText().toString().trim();
-
-
-            try{
-                int numberOfBags = Integer.parseInt(numberOfBagsStr);
-                if(numberOfBags<=0){
-                    flag = false;
-                    throw new NumberFormatException("Received Bags can not be less than 1");
+            String[] shipmentDetails = new String[]{numberOfBagsStr, totalWeightStr, transitCostStr};
+            ShipmentViewModel shipmentViewModel = new ViewModelProvider(this).get(ShipmentViewModel.class);
+            OrderViewModel orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
+            ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.submit(new AddShipmentRunnable(order.getOrderId(), order.getProductId(), shipmentType, shipmentDetails,
+                    shipmentViewModel, orderViewModel, productViewModel, (roomResponse) -> {
+                if (roomResponse.getIsValid()) {
+                    Toast.makeText(this, roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("order", order);
+                    resultIntent.putExtra("customerName", customerName);
+                    resultIntent.putExtra("productName", productName);
+                    resultIntent.putExtra("numberOfShipments", numberOfShipments + 1);
+                    double totalWeight = Double.parseDouble(totalWeightStr);
+                    resultIntent.putExtra("receivedQuantity", receivedQuantity + totalWeight);
+                    resultIntent.putExtra("position", position);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                } else {
+                    Toast.makeText(this, roomResponse.getMessage(), Toast.LENGTH_LONG).show();
                 }
-                double totalWeight = Double.parseDouble(totalWeightStr);
-                if(totalWeight<=0){
-                    flag = false;
-                    throw new NumberFormatException("Weight should be more than 0");
-                }
-                int transitCost = Integer.parseInt(transitCostStr);
-                if(transitCost<0){
-                    flag = false;
-                    throw new NumberFormatException("Transit Cost can not be less than 0");
-                }
-                if(flag){
-                    //go ahead
-                    int finalShipmentType = shipmentType;
-                    MrManageDatabase db = MrManageDatabase.getINSTANCE(getApplicationContext());
-                    new Thread(()->{
-                        Shipment shipment = new Shipment(order.getOrderId(), numberOfBags,totalWeight, finalShipmentType,transitCost);
-                        db.shipmentDao().insert(shipment);
-                        db.orderDao().updateReceivedQuantity(order.getOrderId(), totalWeight);
-                        if(finalShipmentType==0){
-                            db.productDao().updateNumberOfBagsInStock(order.getProductId(), numberOfBags);
-                            db.productDao().updateQuantityInStock(order.getProductId(), totalWeight);
-                        }else{
-                            db.productDao().updateNumberOfBagsDelivered(order.getProductId(), numberOfBags);
-                            db.productDao().updateQuantityDelivered(order.getProductId(), totalWeight);
-                        }
-
-
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("order",order);
-                        resultIntent.putExtra("customerName", customerName);
-                        resultIntent.putExtra("productName", productName);
-                        resultIntent.putExtra("numberOfShipments",  numberOfShipments+1);
-                        resultIntent.putExtra("receivedQuantity", receivedQuantity+totalWeight);
-                        resultIntent.putExtra("position",position);
-
-                        setResult(RESULT_OK, resultIntent);
-                        finish();
-                    }).start();
-                }else{
-                    Toast.makeText(this, "Can not add shipment right now", Toast.LENGTH_SHORT).show();
-                }
-
-            }catch(NumberFormatException ex){
-
-                Toast.makeText(this,ex.getMessage(), Toast.LENGTH_LONG).show();
-            }catch (Exception e) {
-                Log.e("AddShipmentActivity", "Error during database operations", e);
-                // Handle error appropriately
-            }
+            }));
         });
     }
 }

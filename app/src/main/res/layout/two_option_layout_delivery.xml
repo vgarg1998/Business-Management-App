@@ -32,8 +32,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
             app:strokeWidth="1dp"
-
-            />
+            android:onClick="createDeliveryClicked" />
 
         <TextView
             android:id="@+id/create_text_view"
@@ -87,7 +86,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

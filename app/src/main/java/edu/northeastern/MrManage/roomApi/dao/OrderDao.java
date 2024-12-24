@@ -1,5 +1,6 @@
 package edu.northeastern.MrManage.roomApi.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -15,7 +16,7 @@ public interface OrderDao {
     void insertOrder(Order order);
 
     @Query("SELECT * FROM `Order` WHERE stage = -1")
-    List<Order> getActiveOrders();
+    LiveData<List<Order>> getActiveOrders();
 
     @Query("UPDATE `Order` SET received_quantity = received_quantity + :quantity WHERE order_id = :orderId")
     void updateReceivedQuantity(Long orderId, double quantity);

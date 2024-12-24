@@ -1,5 +1,6 @@
 package edu.northeastern.MrManage.roomApi.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -10,7 +11,7 @@ import edu.northeastern.MrManage.roomApi.entities.Shipment;
 public interface ShipmentDao {
 
     @Query("Select count(*) from SHIPMENT where order_id =:orderId")
-    int getNumberOfShipments(Long orderId);
+    LiveData<Integer> getNumberOfShipments(Long orderId);
 
     @Query("Select sum(quantity) from SHIPMENT where order_id=:orderId")
     double getReceivedQuantity(Long orderId);
