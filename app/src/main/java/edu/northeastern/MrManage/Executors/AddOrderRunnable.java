@@ -4,6 +4,9 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Handler;
 import android.os.Looper;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
@@ -42,7 +45,7 @@ public class AddOrderRunnable implements Runnable {
         String productId = orderDetails[0];
         String manufactureId = orderDetails[1];
         String quantity = orderDetails[2];
-        String proposedEndDate = orderDetails[3];
+        long proposedEndDate = Long.parseLong(orderDetails[3]);
 
         if (!quantity.matches("-?\\d+(\\.\\d+)?")) {
             return new RoomResponse(false, "Only numeric values are allowed for quantity");
@@ -53,12 +56,13 @@ public class AddOrderRunnable implements Runnable {
             Order order = new Order(
                     Long.parseLong(productId),
                     Long.parseLong(manufactureId),
-                    DateTimeUtils.getCurrentDateTime(),
+                    System.currentTimeMillis(),
                     Double.parseDouble(quantity),
                     proposedEndDate
             );
+            //here before adding the order we need to ask user to very whether the order details are correct or not
             orderViewModel.addOrder(order);
-            productViewModel.updateOrderedQuantity(productId, quantity);
+            productViewModel.updateOrderedQuantity(Long.parseLong(productId), Double.parseDouble(quantity));
             return new RoomResponse(true, "Successfully added new order");
         } catch (SQLiteConstraintException e) {
             return new RoomResponse(false, handleSQLiteConstraintException(e));

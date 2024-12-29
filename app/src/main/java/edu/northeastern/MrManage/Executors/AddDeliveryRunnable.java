@@ -34,7 +34,7 @@ public class AddDeliveryRunnable implements Runnable {
             String quantityStr = deliveryDetails[0];
             String numberOfBagsDeliveredStr = deliveryDetails[1];
             String transitCostStr = deliveryDetails[2];
-            String deliveryDate = deliveryDetails[3];
+            long deliveryDate = Long.parseLong(deliveryDetails[3]);
 
             if (quantityStr.isEmpty() || numberOfBagsDeliveredStr.isEmpty() || transitCostStr.isEmpty()) {
                 return new RoomResponse(false, "Input fields cannot be empty");

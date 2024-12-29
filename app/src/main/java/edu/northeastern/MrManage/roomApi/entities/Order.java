@@ -43,24 +43,24 @@ public class Order implements Parcelable {
     private double receivedQuantity = 0.0d;
 
     @ColumnInfo(name = "proposed_end_date")
-    private String proposedEndDate;
+    private long proposedEndDate;
 
     @ColumnInfo(name = "end_date")
-    private String endDate = null;
+    private long endDate;
 
-    public String getProposedEndDate() {
+    public long getProposedEndDate() {
         return proposedEndDate;
     }
 
-    public void setProposedEndDate(String proposedEndDate) {
+    public void setProposedEndDate(long proposedEndDate) {
         this.proposedEndDate = proposedEndDate;
     }
 
-    public String getEndDate() {
+    public long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(long endDate) {
         this.endDate = endDate;
     }
 
@@ -68,9 +68,9 @@ public class Order implements Parcelable {
     private Long manufacturer;
 
     @ColumnInfo(name = "order_date")
-    private String orderDate;
+    private Long orderDate;
 
-    public Order(long productId, long manufacturer, String orderDate, double orderedQuantity, String proposedEndDate) {
+    public Order(long productId, long manufacturer, long orderDate, double orderedQuantity, long proposedEndDate) {
         this.productId = productId;
         this.manufacturer = manufacturer;
         this.orderDate = orderDate;
@@ -102,7 +102,7 @@ public class Order implements Parcelable {
         return manufacturer;
     }
 
-    public String getOrderDate() {
+    public long getOrderDate() {
         return orderDate;
     }
 
@@ -130,7 +130,7 @@ public class Order implements Parcelable {
         this.manufacturer = manufacturer;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(long orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -161,7 +161,7 @@ public class Order implements Parcelable {
         } else {
             manufacturer = in.readLong();
         }
-        orderDate = in.readString();
+        orderDate = Long.parseLong(in.readString());
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
@@ -199,7 +199,7 @@ public class Order implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(manufacturer);
         }
-        dest.writeString(orderDate);
+        dest.writeString(String.valueOf(orderDate));
     }
 
     @Override

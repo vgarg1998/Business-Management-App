@@ -27,18 +27,21 @@ public class DeliveryRepository {
     @Transaction
     public void insertDelivery(Delivery delivery){
         deliveryDao.insertDelivery(delivery);
-        productDao.updateQuantityInStock(delivery.getProductId(),-delivery.getTotalQuantityKg());
-        productDao.updateNumberOfBagsInStock(delivery.getProductId(),-delivery.getNumberOfBags());
+        productDao.deleteStock(delivery.getProductId(),delivery.getNumberOfBags(),delivery.getTotalQuantityKg());
         productDao.updateQuantityDelivered(delivery.getProductId(),delivery.getTotalQuantityKg());
-        productDao.updateNumberOfBagsDelivered(delivery.getProductId(), delivery.getNumberOfBags());
+        productDao.updateNumberOfBagsDelivered(delivery.getProductId(),delivery.getNumberOfBags());
     }
 
     public void updateDelivery(Delivery delivery){
         deliveryDao.updateDelivery(delivery);
     }
 
-    public void deleteDelivery(long deliveryId){
-        deliveryDao.deleteDelivery(deliveryId);
+    @Transaction
+    public void deleteDelivery(Delivery delivery){
+        deliveryDao.deleteDelivery(delivery.getId());
+        productDao.updateStock(delivery.getProductId(),delivery.getNumberOfBags(),delivery.getTotalQuantityKg());
+        productDao.updateQuantityDelivered(delivery.getProductId(),-delivery.getTotalQuantityKg());
+        productDao.updateNumberOfBagsDelivered(delivery.getProductId(),-delivery.getNumberOfBags());
     }
 
 

@@ -47,6 +47,16 @@ public class OrderViewModel extends ViewModel {
 
     }
 
+    public void makeOrderReceived(Long orderId, Long currentDate){
+        executorService.execute(()->{
+            orderRepository.makeOrderReceived(orderId,currentDate);
+        });
+    }
+
+    public LiveData<List<Order>> getReceivedOrder(){
+        return orderRepository.getReceivedOrder();
+    }
+
     // Delete an order
 
 
@@ -54,5 +64,17 @@ public class OrderViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         executorService.shutdown(); // Shutdown executor service when ViewModel is cleared
+    }
+
+    public LiveData<List<Order>> getOrdersByProduct( Long productId, int stage) {
+        return orderRepository.getOrdersByProduct(productId, stage);
+    }
+
+    public LiveData<List<Order>> getOrdersByCustomer(Long customerId, int stage){
+        return orderRepository.getOrdersByCustomer(customerId, stage);
+    }
+
+    public void deleteOrder(Order order) {
+        executorService.execute(()->orderRepository.deleteOrder(order));
     }
 }

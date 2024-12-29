@@ -6,4 +6,5 @@
     </string-array>
     <string name="receivedAtWarehouse">Received at Warehouse</string>
     <string name="toCustomer">Directly to Customer</string>
+    <string name="received_at_warehouse">Received at Warehouse</string>
 </resources>

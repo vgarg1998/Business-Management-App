@@ -70,7 +70,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            android:onClick="viewDeliveryHistoryClicked"
+            />
 
         <TextView
             android:id="@+id/update_text_view"

@@ -16,6 +16,7 @@ import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ShipmentViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
+import edu.northeastern.MrManage.utility.DateTimeUtils;
 import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
 import edu.northeastern.MrManage.view.dialogs.ViewOrderDialog;
 import edu.northeastern.MrManage.view.viewholders.ActiveOrderViewHolder;
@@ -23,11 +24,13 @@ import edu.northeastern.MrManage.view.viewholders.ActiveOrderViewHolder;
 public class ActiveOrderAdapter extends RecyclerView.Adapter<ActiveOrderViewHolder> {
     List<Order> orders;
     Context context;
+    int width;
 
 
-    public ActiveOrderAdapter(List<Order> orders, Context context) {
+    public ActiveOrderAdapter(List<Order> orders, Context context, int width) {
         this.orders = orders;
         this.context = context;
+        this.width = width;
     }
 
     @NonNull
@@ -42,10 +45,11 @@ public class ActiveOrderAdapter extends RecyclerView.Adapter<ActiveOrderViewHold
         Order order = orders.get(position);
 
         // Set basic Order details
-        holder.orderDate.setText(order.getOrderDate());
+        holder.orderDate.setText(DateTimeUtils.formatTime(order.getOrderDate()));
         holder.orderQuantity.setText(String.valueOf(order.getOrderedQuantity()));
         holder.quantityAcquired.setText(String.valueOf(order.getReceivedQuantity()));
-        holder.proposedEndDate.setText(order.getProposedEndDate());
+        holder.proposedEndDate.setText(DateTimeUtils.formatTime(order.getProposedEndDate()));
+        holder.orderId.setText(String.valueOf(order.getOrderId()));
 
         ProductViewModel productViewModel = new ViewModelProvider((ActiveOrderActivity) context).get(ProductViewModel.class);
         UserViewModel userViewModel = new ViewModelProvider((ActiveOrderActivity) context).get(UserViewModel.class);
@@ -59,7 +63,7 @@ public class ActiveOrderAdapter extends RecyclerView.Adapter<ActiveOrderViewHold
                 shipmentViewModel.getNumberOfShipments(order.getOrderId())
                         .observe((ActiveOrderActivity) context, numberOfShipmentsReturned -> {
                             holder.itemView.setOnClickListener((v) -> {
-                                new ViewOrderDialog().showDialog(v.getContext(), order, productName, customerName, numberOfShipmentsReturned, order.getReceivedQuantity(), position);
+                                new ViewOrderDialog().showDialog(v.getContext(), order, productName, customerName, numberOfShipmentsReturned, order.getReceivedQuantity(), position,width);
 
                             });
                         });

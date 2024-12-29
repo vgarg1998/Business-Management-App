@@ -30,4 +30,6 @@ public class ShipmentRepository {
     public void insert(Shipment shipment) {
         shipmentDao.insert(shipment);
     }
+
+
 }

@@ -30,7 +30,7 @@ public class ProductRepository {
     }
 
     // Method to update ordered quantity
-    public void updateOrderedQuantity(String productId, String quantity) {
+    public void updateOrderedQuantity(Long productId, double quantity) {
         productDao.updateOrderedQuantity(productId, quantity);
     }
 

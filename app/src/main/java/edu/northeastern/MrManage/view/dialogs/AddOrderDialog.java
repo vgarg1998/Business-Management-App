@@ -39,6 +39,7 @@ import edu.northeastern.MrManage.roomApi.entities.User;
 import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
+import edu.northeastern.MrManage.utility.DateTimeUtils;
 
 
 public class AddOrderDialog {
@@ -49,6 +50,10 @@ public class AddOrderDialog {
 
     static OrderViewModel orderViewModel;
     static ProductViewModel productViewModel;
+
+    static long selectedDate = 0;
+
+
 
     public AddOrderDialog(Context context) {
         this.context = context;
@@ -95,7 +100,7 @@ public class AddOrderDialog {
                         , new String[]{selectedProduct.getProductId().toString(),
                         String.valueOf(selectedManufacturer.getId()),
                         quantityEditText.getText().toString().trim(),
-                        proposedDeliveryDate.getText().toString().trim()}, roomResponse -> {
+                        String.valueOf(selectedDate)}, roomResponse -> {
                     if (roomResponse.getIsValid()) {
                         Toast.makeText(context, roomResponse.getMessage(), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
@@ -122,9 +127,10 @@ public class AddOrderDialog {
         // Show the Date Picker when the button is clicked
         proposedDeliveryDateButton.setOnClickListener(v -> datePicker.show(activity.getSupportFragmentManager(), "DATE_PICKER"));
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String formattedDate = sdf.format(new Date(selection));
-            proposedDeliveryDate.setText(formattedDate);
+            proposedDeliveryDate.setText(DateTimeUtils.formatTime(selection)
+            );
+            selectedDate = selection;
+
         });
 
     }

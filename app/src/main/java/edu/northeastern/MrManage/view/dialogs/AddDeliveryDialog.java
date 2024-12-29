@@ -37,6 +37,7 @@ import edu.northeastern.MrManage.roomApi.entities.User;
 import edu.northeastern.MrManage.roomApi.view_model.DeliveryViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
+import edu.northeastern.MrManage.utility.DateTimeUtils;
 import edu.northeastern.MrManage.utility.RoomResponse;
 import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
 
@@ -44,6 +45,8 @@ public class AddDeliveryDialog {
     final  Context context;
     static UserViewModel userViewModel;
     static ProductViewModel productViewModel;
+
+    static long selectedDate = 0;
 
     public AddDeliveryDialog(Context context) {
         this.context = context;
@@ -76,9 +79,10 @@ public class AddDeliveryDialog {
         // Show the Date Picker when the button is clicked
         proposedDeliveryDateButton.setOnClickListener(v -> datePicker.show(activity.getSupportFragmentManager(), "DATE_PICKER"));
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String formattedDate = sdf.format(new Date(selection));
-            deliveryText.setText(formattedDate);
+
+            deliveryText.setText(DateTimeUtils.formatTime(selection));
+            selectedDate = selection;
+
         });
         Spinner spinner = addDeliveryDialog.findViewById(R.id.customer_spinner);
         Spinner productSpinner = addDeliveryDialog.findViewById(R.id.product_spinner);
@@ -97,8 +101,7 @@ public class AddDeliveryDialog {
                         quantityInput.getText().toString(),
                         bagsInput.getText().toString(),
                         transitCostInput.getText().toString(),
-                        deliveryDate.getText().toString()
-
+                        String.valueOf(selectedDate)
                 };
 
                 DeliveryViewModel deliveryViewModel = new ViewModelProvider((MainActivity) context).get(DeliveryViewModel.class);

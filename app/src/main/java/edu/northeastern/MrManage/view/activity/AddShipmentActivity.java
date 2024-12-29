@@ -55,6 +55,13 @@ public class AddShipmentActivity extends AppCompatActivity {
         }
         Bundle bundle = intent.getExtras();
 
+        if (order == null || bundle == null) {
+            Toast.makeText(this, "Required data missing", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+
         textViewOrderId.setText(String.valueOf(order.getOrderId()));
         String productName = bundle.getString("productName");
         textViewProductName.setText(productName);
@@ -71,13 +78,18 @@ public class AddShipmentActivity extends AppCompatActivity {
             String shipmentTypeStr = spinner.getSelectedItem().toString();
             //1 for customer, 0 for warehouse
             int shipmentType = 1;
-            if (shipmentTypeStr.equals("Received at Warehouse")) {
+            if (shipmentTypeStr.equals(getString(R.string.received_at_warehouse))) {
                 shipmentType = 0;
             }
 
             String numberOfBagsStr = editTextNumberOfBags.getText().toString().trim();
             String totalWeightStr = editTextTotalWeight.getText().toString().trim();
             String transitCostStr = editTextTransitCost.getText().toString().trim();
+            if (numberOfBagsStr.isEmpty() || totalWeightStr.isEmpty() || transitCostStr.isEmpty()) {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String[] shipmentDetails = new String[]{numberOfBagsStr, totalWeightStr, transitCostStr};
             ShipmentViewModel shipmentViewModel = new ViewModelProvider(this).get(ShipmentViewModel.class);
             OrderViewModel orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);

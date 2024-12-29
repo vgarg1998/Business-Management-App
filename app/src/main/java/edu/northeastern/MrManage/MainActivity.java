@@ -13,11 +13,15 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.northeastern.MrManage.utility.AppContextHolder;
+
 import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
+import edu.northeastern.MrManage.view.activity.DeliveryHistoryActivity;
 import edu.northeastern.MrManage.view.activity.ManageUserActivity;
+import edu.northeastern.MrManage.view.activity.ReceivedOrderActivity;
+import edu.northeastern.MrManage.view.activity.StocksHistoryActivity;
 import edu.northeastern.MrManage.view.dialogs.AddDeliveryDialog;
 import edu.northeastern.MrManage.view.dialogs.AddOrderDialog;
+import edu.northeastern.MrManage.view.dialogs.AddStockHistoryDialog;
 import edu.northeastern.MrManage.view.dialogs.AddUserDialog;
 
 @AndroidEntryPoint
@@ -27,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppContextHolder.init(this);
         setOnClickListener();
     }
 
@@ -103,4 +106,28 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("isCustomer", false);
         startActivity(intent);
     }
+
+    public void viewDeliveryHistoryClicked(View view){
+        Intent intent = new Intent(MainActivity.this, DeliveryHistoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void startReceivedOrderActivity(View view){
+        Intent intent = new Intent(MainActivity.this, ReceivedOrderActivity.class);
+        startActivity(intent);
+    }
+
+    public void addOldStockClicked(View view) {
+        setOnTouchAnimation((ShapeableImageView) view);
+        View rootView = getWindow().getDecorView().getRootView();
+        AddStockHistoryDialog addStockHistoryDialog = new AddStockHistoryDialog(this);
+        addStockHistoryDialog.addStockHistoryDialog(this,rootView.getWidth());
+    }
+
+    public void onClickOldStockUpdateHistory(View view) {
+        Intent intent = new Intent(MainActivity.this, StocksHistoryActivity.class);
+        startActivity(intent);
+    }
+
+
 }

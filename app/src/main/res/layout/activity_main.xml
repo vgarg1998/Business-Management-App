@@ -143,12 +143,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="PURCHASE"
+                    android:text="INVENTORY"
                     android:textSize="20sp" />
 
             </androidx.cardview.widget.CardView>
 
-            <include layout="@layout/two_option_layout_purchase" />
+            <include layout="@layout/two_option_layout_update_inventory" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

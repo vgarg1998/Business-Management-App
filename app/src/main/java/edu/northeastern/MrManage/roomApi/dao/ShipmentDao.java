@@ -5,6 +5,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.util.List;
+
 import edu.northeastern.MrManage.roomApi.entities.Shipment;
 
 @Dao
@@ -18,4 +20,10 @@ public interface ShipmentDao {
 
     @Insert
     void insert(Shipment shipment);
+
+    @Query("SELECT * FROM SHIPMENT")
+    LiveData<List<Shipment>> getAllShipments();
+
+    @Query("SELECT * FROM SHIPMENT WHERE delivery_type = 1")
+    LiveData<List<Shipment>> getAllDirectShipments();
 }

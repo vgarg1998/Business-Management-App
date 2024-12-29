@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+import edu.northeastern.MrManage.roomApi.entities.unified_data_model.UnifiedItem;
+
 @Entity(
         tableName = "delivery",
         foreignKeys = @ForeignKey(
@@ -16,7 +18,7 @@ import java.util.Date;
                 onDelete = ForeignKey.CASCADE
         )
 )
-public class Delivery {
+public class Delivery implements UnifiedItem {
     @PrimaryKey(autoGenerate = true)
     private long id; // Auto-incremented ID
 
@@ -33,17 +35,17 @@ public class Delivery {
     private int numberOfBags; // Number of bags
 
     @ColumnInfo(name = "delivery_date")
-    private String deliveryDate; // Delivery date
+    private long date; // Delivery date
 
     public Delivery() {
     }
 
-    public Delivery(Long productId, double quantity, int numberOfBagsDelivered, double transitCost, String date) {
+    public Delivery(Long productId, double quantity, int numberOfBagsDelivered, double transitCost, long date) {
         this.productId = productId;
         this.totalQuantityKg = quantity;
         this.numberOfBags = numberOfBagsDelivered;
         this.transitCost = transitCost;
-        this.deliveryDate = date;
+        this.date = date;
     }
 
     // Getters and Setters
@@ -87,11 +89,11 @@ public class Delivery {
         this.numberOfBags = numberOfBags;
     }
 
-    public String getDeliveryDate() {
-        return deliveryDate;
+    public Long getDate() {
+        return date;
     }
 
-    public void setDeliveryDate(String deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setDate(long deliveryDate) {
+        this.date = deliveryDate;
     }
 }

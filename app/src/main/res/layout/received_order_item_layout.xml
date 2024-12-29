@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?><!-- item_card.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/customer_name_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer Name"
+                android:textAlignment="center" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/product_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textAlignment="center" />
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="3"
+            android:columnCount="3"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="ORDER DATE"
+                android:textAlignment="center"
+                android:layout_columnWeight="1" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="PROPOSED END DATE"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="END DATE"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/text_view_order_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0Kg"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/text_view_proposed_end_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0Kg"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+            <TextView
+                android:id="@+id/text_view_end_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0Kg"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+
+        </GridLayout>
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="2"
+            android:columnCount="2"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="QUANTITY ORDERED"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="QUANTITY ACQUIRED"
+                android:textAlignment="center"
+                android:layout_columnWeight="1" />
+
+            <TextView
+                android:id="@+id/text_view_ordered_quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0Kg"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+
+            <TextView
+                android:id="@+id/text_view_order_acquired"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0Kg"
+                android:layout_columnWeight="1"
+                android:textAlignment="center" />
+
+
+        </GridLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

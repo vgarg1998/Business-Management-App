@@ -16,11 +16,13 @@ import edu.northeastern.MrManage.roomApi.dao.DeliveryDao;
 import edu.northeastern.MrManage.roomApi.dao.OrderDao;
 import edu.northeastern.MrManage.roomApi.dao.ProductDao;
 import edu.northeastern.MrManage.roomApi.dao.ShipmentDao;
+import edu.northeastern.MrManage.roomApi.dao.StockHistoryDao;
 import edu.northeastern.MrManage.roomApi.dao.UserDao;
 import edu.northeastern.MrManage.roomApi.repositories.DeliveryRepository;
 import edu.northeastern.MrManage.roomApi.repositories.OrderRepository;
 import edu.northeastern.MrManage.roomApi.repositories.ProductRepository;
 import edu.northeastern.MrManage.roomApi.repositories.ShipmentRepository;
+import edu.northeastern.MrManage.roomApi.repositories.StockHistoryRepository;
 import edu.northeastern.MrManage.roomApi.repositories.UserRepository;
 
 @Module
@@ -52,8 +54,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static OrderRepository provideOrderRepository(OrderDao orderDao) {
-        return new OrderRepository(orderDao);
+    public static OrderRepository provideOrderRepository(OrderDao orderDao, ProductDao productDao) {
+        return new OrderRepository(orderDao, productDao);
     }
 
     @Provides
@@ -91,6 +93,19 @@ public class AppModule {
     public static DeliveryRepository provideDeliveryRepository(DeliveryDao deliveryDao, ProductDao productDao) {
         return new DeliveryRepository(deliveryDao, productDao);
     }
+
+    @Provides
+    @Singleton
+    public static StockHistoryDao provideStockHistoryDao(MrManageDatabase database) {
+        return database.stockHistoryDao();
+    }
+
+    @Provides
+    @Singleton
+    public static StockHistoryRepository provideStockHistoryRepository(StockHistoryDao stockHistoryDao, ProductDao productDao) {
+        return new StockHistoryRepository(stockHistoryDao, productDao);
+    }
+
 
 
 }

@@ -32,7 +32,7 @@ public class Shipment {
     private double cost;
 
     @ColumnInfo(name = "delivery_date")
-    private String date;
+    private long date;
 
     @ColumnInfo(name = "delivery_type")
     private int delivery_type; //1 for customer, 0 for warehouse
@@ -43,7 +43,7 @@ public class Shipment {
         this.quantity = quantity;
 
         this.cost = cost;
-        this.date = new Date().toString();
+        this.date = System.currentTimeMillis();
         this.delivery_type = delivery_type;
     }
 
@@ -55,7 +55,7 @@ public class Shipment {
         return quantity;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
@@ -79,7 +79,7 @@ public class Shipment {
         this.quantity = quantity;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

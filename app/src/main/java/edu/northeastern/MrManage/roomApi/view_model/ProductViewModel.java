@@ -40,7 +40,7 @@ public class ProductViewModel extends ViewModel {
     }
 
     // Method to update ordered quantity
-    public void updateOrderedQuantity(String productId, String quantity) {
+    public void updateOrderedQuantity(Long productId, double quantity) {
         executorService.execute(() -> productRepository.updateOrderedQuantity(productId, quantity));
     }
 

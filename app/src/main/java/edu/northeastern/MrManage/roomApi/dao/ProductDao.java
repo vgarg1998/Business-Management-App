@@ -20,7 +20,7 @@ public interface ProductDao {
     LiveData<List<Product>> getProducts(Long customerId);
 
     @Query("UPDATE Product SET quantity_in_order = :quantity + quantity_in_order WHERE product_id = :productId")
-    void updateOrderedQuantity(String productId, String quantity);
+    void updateOrderedQuantity(Long productId, double quantity);
 
     @Query("SELECT product_name as productName, customer_id as customerId FROM Product WHERE product_id = :productId")
     ProductCustomer getProductNameAndCustomerId(Long productId);
@@ -42,5 +42,13 @@ public interface ProductDao {
     void updateQuantityInStock(long productId, double delivered);
 
 
+    @Query("UPDATE Product SET number_of_bags_in_stock = number_of_bags_in_stock  +:numberOfBags, quantity_in_inventory = quantity_in_inventory +:quantity WHERE product_id = :productId")
+    void updateStock(long productId, int numberOfBags, double quantity);
+
+    @Query("UPDATE Product SET number_of_bags_in_stock = number_of_bags_in_stock - :numberOfBags, quantity_in_inventory = quantity_in_inventory - :quantity WHERE product_id = :productId")
+    void deleteStock(long productId, int numberOfBags, double quantity);
+
+    @Query("SELECT product_name FROM Product WHERE product_id = :productId")
+    LiveData<String> getProductName(long productId);
 }
 

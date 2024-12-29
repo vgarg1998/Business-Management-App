@@ -1,6 +1,7 @@
 package edu.northeastern.MrManage.view.viewholders;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,9 @@ public class ActiveOrderViewHolder extends RecyclerView.ViewHolder {
 
     public TextView quantityAcquired;
 
+    public TextView orderId;
+
+
     public ActiveOrderViewHolder(@NonNull View itemView) {
         super(itemView);
         orderDate = itemView.findViewById(R.id.text_view_order_date);
@@ -28,5 +32,6 @@ public class ActiveOrderViewHolder extends RecyclerView.ViewHolder {
         customerName = itemView.findViewById(R.id.customer_name_text_view);
         proposedEndDate = itemView.findViewById(R.id.text_view_proposed_end_date);
         quantityAcquired = itemView.findViewById(R.id.text_view_order_acquired);
+        orderId = itemView.findViewById(R.id.order_id_value);
     }
 }

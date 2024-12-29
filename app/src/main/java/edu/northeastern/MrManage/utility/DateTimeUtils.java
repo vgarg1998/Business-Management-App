@@ -1,12 +1,15 @@
 package edu.northeastern.MrManage.utility;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 public class DateTimeUtils {
-    public static String getCurrentDateTime() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return now.format(formatter);
+    public static String formatTime(Long selection) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(new Date(selection));
+        return formattedDate;
     }
 }

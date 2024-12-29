@@ -35,23 +35,23 @@ public class DeliveryViewModel extends ViewModel {
         executorService.execute(()->deliveryRepository.updateDelivery(delivery));
     }
 
-    public void deleteDelivery(long deliveryId){
-        executorService.execute(()->deliveryRepository.deleteDelivery(deliveryId));
-    }
-
 
     public LiveData<List<Delivery>> getDeliveriesByProductId(long productId){
         return deliveryRepository.getDeliveriesByProductId(productId);
     }
 
 
-    LiveData<List<Delivery>> getDeliveriesByDateRange(String startDate, String endDate){
+    public LiveData<List<Delivery>> getDeliveriesByDateRange(String startDate, String endDate){
         return deliveryRepository.getDeliveriesByDateRange(startDate,endDate);
     }
 
 
-    LiveData<List<Delivery>> getAllDeliveries(){
+    public LiveData<List<Delivery>> getAllDeliveries(){
         return deliveryRepository.getAllDeliveries();
+    }
+
+    public void delete(Delivery delivery) {
+        executorService.execute(() -> deliveryRepository.deleteDelivery(delivery));
     }
 }
 
