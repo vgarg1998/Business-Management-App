@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">BhavyaPlasticInventory</string>
+    <string name="app_name">MrManage</string>
+    <string-array name="shipment_types">
+        <item>Received at Warehouse</item>
+        <item>Directly to Customer</item>
+    </string-array>
+    <string name="receivedAtWarehouse">Received at Warehouse</string>
+    <string name="toCustomer">Directly to Customer</string>
+    <string name="received_at_warehouse">Received at Warehouse</string>
 </resources>

@@ -29,8 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
             app:strokeWidth="1dp"
-
-            />
+            android:onClick="createOrderClicked" />
 
         <TextView
             android:id="@+id/create_text_view"
@@ -66,7 +65,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            android:onClick="activeOrderActivityOnClick" />
 
         <TextView
             android:id="@+id/update_text_view"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:elevation="-10dp"
-            android:text="UPDATE"
+            android:text="ACTIVE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            android:onClick="startReceivedOrderActivity" />
 
         <TextView
             android:id="@+id/complete_text_view"
@@ -111,7 +112,7 @@
             android:layout_gravity="center"
 
             android:elevation="-10dp"
-            android:text="COMPLETE"
+            android:text="RECEIVED"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:elevation="-10dp"
-            android:text="PENDING"
+            android:text="DELIVERED"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
