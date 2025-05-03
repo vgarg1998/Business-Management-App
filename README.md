@@ -30,6 +30,48 @@ Their data is backed up to a JSON/text file in their personal Drive
 
 This removes the need for a central backend/database
 
+Project Structure:
+MrManage/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── AndroidManifest.xml
+│   │   │   ├── java/edu/northeastern/MrManage/
+│   │   │   │   ├── ApplicationInitiate.java
+│   │   │   │   ├── MainActivity.java
+│   │   │   │   ├── Executors/
+│   │   │   │   ├── roomApi/
+│   │   │   │   │   ├── MrManageDatabase.java
+│   │   │   │   │   ├── dao/
+│   │   │   │   │   ├── entities/
+│   │   │   │   │   ├── repositories/
+│   │   │   │   │   └── view_model/
+│   │   │   │   ├── utility/
+│   │   │   │   │   └── interfaces/
+│   │   │   │   └── view/
+│   │   │   │       ├── actions/
+│   │   │   │       ├── activity/
+│   │   │   │       ├── adapters/
+│   │   │   │       ├── dialogs/
+│   │   │   │       ├── interfaces/
+│   │   │   │       └── viewholders/
+│   │   ├── res/
+│   │   │   ├── color/
+│   │   │   ├── drawable/
+│   │   │   ├── drawable-v24/
+│   │   │   ├── layout/
+│   │   │   ├── mipmap-*/ (various densities)
+│   │   │   ├── values/
+│   │   │   ├── values-night/
+│   │   │   └── xml/
+│   │   └── test/java/edu/northeastern/MrManage/
+│   │       └── ExampleUnitTest.java
+├── build.gradle
+├── gradle/
+│   └── wrapper/
+├── generate_tree.py
+
+
 Benefits:
 
 Eliminates server costs
