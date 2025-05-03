@@ -41,19 +41,19 @@ public class OrderViewModel extends ViewModel {
     }
 
     public void updateReceivedQuantity(Long orderId, double quantity) {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             orderRepository.updateReceivedQuantity(orderId, quantity);
         });
 
     }
 
-    public void makeOrderReceived(Long orderId, Long currentDate){
-        executorService.execute(()->{
-            orderRepository.makeOrderReceived(orderId,currentDate);
+    public void makeOrderReceived(Long orderId, Long currentDate) {
+        executorService.execute(() -> {
+            orderRepository.makeOrderReceived(orderId, currentDate);
         });
     }
 
-    public LiveData<List<Order>> getReceivedOrder(){
+    public LiveData<List<Order>> getReceivedOrder() {
         return orderRepository.getReceivedOrder();
     }
 
@@ -66,15 +66,15 @@ public class OrderViewModel extends ViewModel {
         executorService.shutdown(); // Shutdown executor service when ViewModel is cleared
     }
 
-    public LiveData<List<Order>> getOrdersByProduct( Long productId, int stage) {
+    public LiveData<List<Order>> getOrdersByProduct(Long productId, int stage) {
         return orderRepository.getOrdersByProduct(productId, stage);
     }
 
-    public LiveData<List<Order>> getOrdersByCustomer(Long customerId, int stage){
+    public LiveData<List<Order>> getOrdersByCustomer(Long customerId, int stage) {
         return orderRepository.getOrdersByCustomer(customerId, stage);
     }
 
     public void deleteOrder(Order order) {
-        executorService.execute(()->orderRepository.deleteOrder(order));
+        executorService.execute(() -> orderRepository.deleteOrder(order));
     }
 }

@@ -23,9 +23,6 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,7 +39,7 @@ import edu.northeastern.MrManage.utility.RoomResponse;
 import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
 
 public class AddDeliveryDialog {
-    final  Context context;
+    final Context context;
     static UserViewModel userViewModel;
     static ProductViewModel productViewModel;
 
@@ -53,6 +50,7 @@ public class AddDeliveryDialog {
         userViewModel = new ViewModelProvider((MainActivity) context).get(UserViewModel.class);
         productViewModel = new ViewModelProvider((MainActivity) context).get(ProductViewModel.class);
     }
+
     public static void addDeliveryDialog(Context context, int width) {
         Log.d("AddDeliveryDialog", "Activity context: " + context);
 
@@ -71,7 +69,7 @@ public class AddDeliveryDialog {
 
         addDeliveryDialog.show();
 
-        setUpDynamicDialogDisplay(addDeliveryDialog,context);
+        setUpDynamicDialogDisplay(addDeliveryDialog, context);
         TextView deliveryText = addDeliveryDialog.findViewById(R.id.delivery_date_text);
         MaterialDatePicker<Long> datePicker = getDatePicker();
         Button proposedDeliveryDateButton = addDeliveryDialog.findViewById(R.id.select_delivery_date_button);
@@ -95,7 +93,7 @@ public class AddDeliveryDialog {
         // Submit button logic
         addDeliveryButton.setOnClickListener(view -> {
             try {
-                Long selectedProductId = ((Product) productSpinner.getSelectedItem()).getProductId();
+                Product selectedProduct = ((Product) productSpinner.getSelectedItem());
 
                 String[] deliveryDetails = {
                         quantityInput.getText().toString(),
@@ -108,26 +106,27 @@ public class AddDeliveryDialog {
 
                 // Run delivery insertion in a background thread
                 ExecutorService executorService = Executors.newSingleThreadExecutor();
-                executorService.submit(new AddDeliveryRunnable(selectedProductId, deliveryDetails, deliveryViewModel, new ValidationListener() {
+                executorService.submit(new AddDeliveryRunnable(selectedProduct, deliveryDetails, deliveryViewModel, new ValidationListener() {
                     @Override
                     public void onValidationResult(RoomResponse roomResponse) {
-                        if(roomResponse.getIsValid()){
-                            Toast.makeText(context,"Delivery Added Successfully",Toast.LENGTH_SHORT).show();
+                        if (roomResponse.getIsValid()) {
+                            Toast.makeText(context, "Delivery Added Successfully", Toast.LENGTH_SHORT).show();
                             addDeliveryDialog.dismiss();
-                        }else{
-                            Toast.makeText(context,roomResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, roomResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }));
                 // Close the dialog after submission
 
             } catch (Exception e) {
-                Toast.makeText(context,"Error fetching input: "+e.getStackTrace(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error fetching input: " + e.getStackTrace(), Toast.LENGTH_SHORT).show();
                 Log.e("AddDeliveryDialog", "Error fetching input: " + e.getMessage());
             }
         });
     }
-    static MaterialDatePicker<Long> getDatePicker(){
+
+    static MaterialDatePicker<Long> getDatePicker() {
         return MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select Delivery Date")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
@@ -138,6 +137,7 @@ public class AddDeliveryDialog {
                                 .build())
                 .build();
     }
+
     private static void setUpDynamicDialogDisplay(Dialog dialog, Context context) {
         Spinner spinner = dialog.findViewById(R.id.customer_spinner);
         Spinner productSpinner = dialog.findViewById(R.id.product_spinner);
@@ -179,12 +179,12 @@ public class AddDeliveryDialog {
                     dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 dialog.findViewById(R.id.order_quantity_input_layout).setVisibility(View.INVISIBLE);
             }
         });
-
 
 
     }

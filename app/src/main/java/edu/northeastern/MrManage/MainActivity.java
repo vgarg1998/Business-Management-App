@@ -13,7 +13,6 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import dagger.hilt.android.AndroidEntryPoint;
-
 import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
 import edu.northeastern.MrManage.view.activity.DeliveryHistoryActivity;
 import edu.northeastern.MrManage.view.activity.ManageUserActivity;
@@ -107,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void viewDeliveryHistoryClicked(View view){
+    public void viewDeliveryHistoryClicked(View view) {
         Intent intent = new Intent(MainActivity.this, DeliveryHistoryActivity.class);
         startActivity(intent);
     }
 
-    public void startReceivedOrderActivity(View view){
+    public void startReceivedOrderActivity(View view) {
         Intent intent = new Intent(MainActivity.this, ReceivedOrderActivity.class);
         startActivity(intent);
     }
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         setOnTouchAnimation((ShapeableImageView) view);
         View rootView = getWindow().getDecorView().getRootView();
         AddStockHistoryDialog addStockHistoryDialog = new AddStockHistoryDialog(this);
-        addStockHistoryDialog.addStockHistoryDialog(this,rootView.getWidth());
+        addStockHistoryDialog.addStockHistoryDialog(this, rootView.getWidth());
     }
 
     public void onClickOldStockUpdateHistory(View view) {

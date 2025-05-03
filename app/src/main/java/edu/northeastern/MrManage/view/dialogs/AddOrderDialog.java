@@ -23,11 +23,8 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -52,7 +49,6 @@ public class AddOrderDialog {
     static ProductViewModel productViewModel;
 
     static long selectedDate = 0;
-
 
 
     public AddOrderDialog(Context context) {

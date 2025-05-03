@@ -83,12 +83,13 @@
                     android:paddingBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/delivered_quantity_input"
+                        android:id="@+id/delivered_bags_input"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Delivered Quantity"
-                        android:inputType="numberDecimal" />
+                        android:hint="Delivered Bags"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -97,12 +98,13 @@
                     android:paddingBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/delivered_bags_input"
+                        android:id="@+id/delivered_quantity_input"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Delivered Bags"
-                        android:inputType="number" />
+                        android:hint="Delivered Quantity"
+                        android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

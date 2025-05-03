@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowId;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,13 +16,10 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.Date;
-
 import edu.northeastern.MrManage.R;
 import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
-import edu.northeastern.MrManage.utility.DateTimeUtils;
 import edu.northeastern.MrManage.view.activity.ActiveOrderActivity;
 import edu.northeastern.MrManage.view.activity.AddShipmentActivity;
 
@@ -39,7 +35,7 @@ public class ViewOrderDialog {
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             layoutParams.copyFrom(window.getAttributes());
             layoutParams.width = width; // Set the width here
-            Log.d("SHOW ORDER DETAILS","THE WIDTH SET IS "+ width);
+            Log.d("SHOW ORDER DETAILS", "THE WIDTH SET IS " + width);
             window.setAttributes(layoutParams);
         }
         TextView orderId = dialogView.findViewById(R.id.order_id);
@@ -58,15 +54,15 @@ public class ViewOrderDialog {
         Button pushOrder = dialogView.findViewById(R.id.btn_push_order);
 
         // Populate data
-        orderId.setText("Order Id: "+ order.getOrderId());
-        date.setText("Order Date: "+order.getOrderDate());
+        orderId.setText("Order Id: " + order.getOrderId());
+        date.setText("Order Date: " + order.getOrderDate());
 
-        UserViewModel userViewModel = new ViewModelProvider((ActiveOrderActivity)context).get(UserViewModel.class);
-        userViewModel.getUserName(order.getManufacturer()).observe((ActiveOrderActivity)context,name->{
-            manufacturer.setText("Manufacturer: "+name);
+        UserViewModel userViewModel = new ViewModelProvider((ActiveOrderActivity) context).get(UserViewModel.class);
+        userViewModel.getUserName(order.getManufacturer()).observe((ActiveOrderActivity) context, name -> {
+            manufacturer.setText("Manufacturer: " + name);
         });
-        product.setText("Product Name: "+productName);
-        customer.setText("Customer Name"+ customerName);
+        product.setText("Product Name: " + productName);
+        customer.setText("Customer Name" + customerName);
         givenQuantity.setText("Ordered Quantity (Kg): " + order.getOrderedQuantity());
         receivedQuantity.setText("Received Quantity (Kg): " + receivedQuant);
         numShipments.setText("Shipments Received (in number): " + numberOfShipment);
@@ -76,9 +72,9 @@ public class ViewOrderDialog {
         editOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(order.getReceivedQuantity()>0 || numberOfShipment>0){
-                    Toast.makeText(context,"Can not edit order because shipments are there",Toast.LENGTH_SHORT).show();
-                }else{
+                if (order.getReceivedQuantity() > 0 || numberOfShipment > 0) {
+                    Toast.makeText(context, "Can not edit order because shipments are there", Toast.LENGTH_SHORT).show();
+                } else {
                     //need to do
                 }
             }
@@ -87,18 +83,16 @@ public class ViewOrderDialog {
         deleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(order.getReceivedQuantity()>0 || numberOfShipment>0){
-                    Toast.makeText(context,"Can not edit order because shipments are there",Toast.LENGTH_SHORT).show();
-                }else{
-                    OrderViewModel orderViewModel = new ViewModelProvider((ActiveOrderActivity)context).get(OrderViewModel.class);
+                if (order.getReceivedQuantity() > 0 || numberOfShipment > 0) {
+                    Toast.makeText(context, "Can not edit order because shipments are there", Toast.LENGTH_SHORT).show();
+                } else {
+                    OrderViewModel orderViewModel = new ViewModelProvider((ActiveOrderActivity) context).get(OrderViewModel.class);
                     orderViewModel.deleteOrder(order);
-                    Toast.makeText(context,"Order deleted successfully",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Order deleted successfully", Toast.LENGTH_SHORT).show();
+                    dialogView.dismiss();
                 }
             }
         });
-
-
-
 
 
         addShipment.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +116,7 @@ public class ViewOrderDialog {
         pushOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OrderViewModel orderViewModel = new ViewModelProvider((ActiveOrderActivity)context).get(OrderViewModel.class);
+                OrderViewModel orderViewModel = new ViewModelProvider((ActiveOrderActivity) context).get(OrderViewModel.class);
                 orderViewModel.makeOrderReceived(order.getOrderId(), System.currentTimeMillis());
                 dialogView.dismiss();
             }

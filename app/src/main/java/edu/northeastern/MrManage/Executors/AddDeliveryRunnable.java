@@ -4,19 +4,20 @@ import android.os.Handler;
 import android.os.Looper;
 
 import edu.northeastern.MrManage.roomApi.entities.Delivery;
+import edu.northeastern.MrManage.roomApi.entities.Product;
 import edu.northeastern.MrManage.roomApi.view_model.DeliveryViewModel;
 import edu.northeastern.MrManage.utility.RoomResponse;
 import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
 
 public class AddDeliveryRunnable implements Runnable {
 
-    private final Long productId;
+    private final Product product;
     private final String[] deliveryDetails;
     private final DeliveryViewModel deliveryViewModel;
     private final ValidationListener validationListener;
 
-    public AddDeliveryRunnable(Long productId, String[] deliveryDetails, DeliveryViewModel deliveryViewModel, ValidationListener validationListener) {
-        this.productId = productId;
+    public AddDeliveryRunnable(Product product, String[] deliveryDetails, DeliveryViewModel deliveryViewModel, ValidationListener validationListener) {
+        this.product = product;
         this.deliveryDetails = deliveryDetails;
         this.deliveryViewModel = deliveryViewModel;
         this.validationListener = validationListener;
@@ -48,9 +49,17 @@ public class AddDeliveryRunnable implements Runnable {
             if (quantity <= 0 || numberOfBagsDelivered <= 0 || transitCost < 0) {
                 return new RoomResponse(false, "Invalid values: Quantity, Number of Bags, and Transit Cost must be positive.");
             }
+            // Check to make sure the delivery quanity of bags and quantity of product is less or equal to in stock
+            int numberOfBagsInStock;
 
+            if (numberOfBagsDelivered > product.getNumberOfBagsInStock()) {
+                return new RoomResponse(false, "Number of bags delivered cannot be greater than the number of bags in stock.");
+            }
+            if (quantity > product.getQuantityInInventory()) {
+                return new RoomResponse(false, "Quantity delivered cannot be greater than the quantity in stock.");
+            }
             // Create Delivery object
-            Delivery delivery = new Delivery(productId, quantity, numberOfBagsDelivered, transitCost, deliveryDate);
+            Delivery delivery = new Delivery(product.getProductId(), quantity, numberOfBagsDelivered, transitCost, deliveryDate);
 
             // Insert delivery into the database
             deliveryViewModel.insertDelivery(delivery);

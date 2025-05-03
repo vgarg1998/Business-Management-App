@@ -16,7 +16,6 @@ import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
 import edu.northeastern.MrManage.utility.DateTimeUtils;
-import edu.northeastern.MrManage.view.activity.DeliveryHistoryActivity;
 import edu.northeastern.MrManage.view.activity.ReceivedOrderActivity;
 import edu.northeastern.MrManage.view.viewholders.ReceivedOrderViewHolder;
 
@@ -34,8 +33,8 @@ public class ReceivedOrderAdapter extends RecyclerView.Adapter<ReceivedOrderView
     @NonNull
     @Override
     public ReceivedOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View  receivedOrderViewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.received_order_item_layout, parent, false);
-        return new ReceivedOrderViewHolder( receivedOrderViewHolder);
+        View receivedOrderViewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.received_order_item_layout, parent, false);
+        return new ReceivedOrderViewHolder(receivedOrderViewHolder);
     }
 
     @Override

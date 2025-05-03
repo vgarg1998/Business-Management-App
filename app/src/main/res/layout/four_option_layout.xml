@@ -103,8 +103,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
             app:strokeWidth="1dp"
-            android:onClick="startReceivedOrderActivity"
-            />
+            android:onClick="startReceivedOrderActivity" />
 
         <TextView
             android:id="@+id/complete_text_view"

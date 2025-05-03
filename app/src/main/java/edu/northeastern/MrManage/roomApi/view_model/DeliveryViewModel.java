@@ -27,26 +27,26 @@ public class DeliveryViewModel extends ViewModel {
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void insertDelivery(Delivery delivery){
-        executorService.execute(()->deliveryRepository.insertDelivery(delivery));
+    public void insertDelivery(Delivery delivery) {
+        executorService.execute(() -> deliveryRepository.insertDelivery(delivery));
     }
 
-    public void updateDelivery(Delivery delivery){
-        executorService.execute(()->deliveryRepository.updateDelivery(delivery));
+    public void updateDelivery(Delivery delivery) {
+        executorService.execute(() -> deliveryRepository.updateDelivery(delivery));
     }
 
 
-    public LiveData<List<Delivery>> getDeliveriesByProductId(long productId){
+    public LiveData<List<Delivery>> getDeliveriesByProductId(long productId) {
         return deliveryRepository.getDeliveriesByProductId(productId);
     }
 
 
-    public LiveData<List<Delivery>> getDeliveriesByDateRange(String startDate, String endDate){
-        return deliveryRepository.getDeliveriesByDateRange(startDate,endDate);
+    public LiveData<List<Delivery>> getDeliveriesByDateRange(String startDate, String endDate) {
+        return deliveryRepository.getDeliveriesByDateRange(startDate, endDate);
     }
 
 
-    public LiveData<List<Delivery>> getAllDeliveries(){
+    public LiveData<List<Delivery>> getAllDeliveries() {
         return deliveryRepository.getAllDeliveries();
     }
 

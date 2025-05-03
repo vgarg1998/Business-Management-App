@@ -16,12 +16,9 @@ import edu.northeastern.MrManage.R;
 import edu.northeastern.MrManage.roomApi.entities.Delivery;
 import edu.northeastern.MrManage.roomApi.view_model.DeliveryViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
-
 import edu.northeastern.MrManage.roomApi.view_model.UserViewModel;
-
 import edu.northeastern.MrManage.utility.DateTimeUtils;
 import edu.northeastern.MrManage.view.activity.DeliveryHistoryActivity;
-
 import edu.northeastern.MrManage.view.viewholders.DeliveryViewHolder;
 
 public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {

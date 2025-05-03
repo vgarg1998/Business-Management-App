@@ -1,7 +1,6 @@
 package edu.northeastern.MrManage.view.viewholders;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;

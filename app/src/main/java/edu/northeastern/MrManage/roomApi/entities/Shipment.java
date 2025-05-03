@@ -5,8 +5,6 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
 @Entity(tableName = "Shipment", foreignKeys = {
         @ForeignKey(
                 entity = Order.class,

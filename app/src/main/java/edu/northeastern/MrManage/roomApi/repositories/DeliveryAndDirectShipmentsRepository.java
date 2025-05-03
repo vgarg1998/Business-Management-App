@@ -24,23 +24,23 @@ public class DeliveryAndDirectShipmentsRepository {
         this.shipmentDao = shipmentDao;
     }
 
-    public LiveData<DeliveryAndDirectShipments> getAllDeliveryAndDirectShipments(){
+    public LiveData<DeliveryAndDirectShipments> getAllDeliveryAndDirectShipments() {
         MediatorLiveData<DeliveryAndDirectShipments> combinedData = new MediatorLiveData<>();
         LiveData<List<Delivery>> deliveryLiveData = deliveryDao.getAllDeliveries();
-        LiveData<List<Shipment>>  shipmentLiveData = shipmentDao.getAllDirectShipments();
-        combinedData.addSource(deliveryLiveData,updatedDeliveries->{
+        LiveData<List<Shipment>> shipmentLiveData = shipmentDao.getAllDirectShipments();
+        combinedData.addSource(deliveryLiveData, updatedDeliveries -> {
             List<Shipment> currentShipments = shipmentLiveData.getValue();
             combinedData.setValue(new DeliveryAndDirectShipments(
-                    currentShipments != null? currentShipments:List.of(),
+                    currentShipments != null ? currentShipments : List.of(),
                     updatedDeliveries
             ));
         });
 
-        combinedData.addSource(shipmentLiveData, updatedShipmentData->{
+        combinedData.addSource(shipmentLiveData, updatedShipmentData -> {
             List<Delivery> currentDelivery = deliveryLiveData.getValue();
             combinedData.setValue(new DeliveryAndDirectShipments(
                     updatedShipmentData,
-                    currentDelivery!=null?currentDelivery:List.of()
+                    currentDelivery != null ? currentDelivery : List.of()
             ));
         });
 

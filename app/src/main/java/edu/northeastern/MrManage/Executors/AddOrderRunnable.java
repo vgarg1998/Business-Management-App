@@ -4,13 +4,9 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Handler;
 import android.os.Looper;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
-import edu.northeastern.MrManage.utility.DateTimeUtils;
 import edu.northeastern.MrManage.utility.RoomResponse;
 import edu.northeastern.MrManage.utility.interfaces.ValidationListener;
 
@@ -25,7 +21,7 @@ public class AddOrderRunnable implements Runnable {
         this.orderDetails = orderDetails;
         this.validationListener = validationListener;
         this.orderViewModel = orderViewModel;
-        this.productViewModel = productViewModel;
+
     }
 
     @Override
@@ -62,7 +58,7 @@ public class AddOrderRunnable implements Runnable {
             );
             //here before adding the order we need to ask user to very whether the order details are correct or not
             orderViewModel.addOrder(order);
-            productViewModel.updateOrderedQuantity(Long.parseLong(productId), Double.parseDouble(quantity));
+
             return new RoomResponse(true, "Successfully added new order");
         } catch (SQLiteConstraintException e) {
             return new RoomResponse(false, handleSQLiteConstraintException(e));

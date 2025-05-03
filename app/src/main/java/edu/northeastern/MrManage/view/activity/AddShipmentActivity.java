@@ -2,7 +2,6 @@ package edu.northeastern.MrManage.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -10,23 +9,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.northeastern.MrManage.Executors.AddOrderRunnable;
 import edu.northeastern.MrManage.Executors.AddShipmentRunnable;
 import edu.northeastern.MrManage.R;
-import edu.northeastern.MrManage.roomApi.MrManageDatabase;
 import edu.northeastern.MrManage.roomApi.entities.Order;
-import edu.northeastern.MrManage.roomApi.entities.Shipment;
 import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ProductViewModel;
 import edu.northeastern.MrManage.roomApi.view_model.ShipmentViewModel;
-import edu.northeastern.MrManage.view.dialogs.AddOrderDialog;
 
 
 @AndroidEntryPoint

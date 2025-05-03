@@ -5,8 +5,6 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
 import edu.northeastern.MrManage.roomApi.entities.unified_data_model.UnifiedItem;
 
 @Entity(

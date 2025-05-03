@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="8dp"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
 
         <!-- Product Name -->
         <LinearLayout
@@ -111,31 +110,32 @@
         </LinearLayout>
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" android:paddingBottom="4dp">
-
-        <TextView
-            android:id="@+id/label_number_of_bags"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bags Delivered:"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            android:paddingBottom="4dp">
 
-        <TextView
-            android:id="@+id/number_of_bags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10.0"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/label_number_of_bags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bags Delivered:"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/number_of_bags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10.0"
+                android:textSize="14sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="4dp"
-            >
+            android:paddingBottom="4dp">
 
             <TextView
                 android:id="@+id/label_delivery_transit_cost"
@@ -152,12 +152,12 @@
                 android:text="10.0"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <Button
             android:id="@+id/delete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete"
-            />
+            android:text="Delete" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

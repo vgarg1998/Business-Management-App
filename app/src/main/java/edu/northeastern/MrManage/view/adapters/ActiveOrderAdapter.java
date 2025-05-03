@@ -63,7 +63,7 @@ public class ActiveOrderAdapter extends RecyclerView.Adapter<ActiveOrderViewHold
                 shipmentViewModel.getNumberOfShipments(order.getOrderId())
                         .observe((ActiveOrderActivity) context, numberOfShipmentsReturned -> {
                             holder.itemView.setOnClickListener((v) -> {
-                                new ViewOrderDialog().showDialog(v.getContext(), order, productName, customerName, numberOfShipmentsReturned, order.getReceivedQuantity(), position,width);
+                                new ViewOrderDialog().showDialog(v.getContext(), order, productName, customerName, numberOfShipmentsReturned, order.getReceivedQuantity(), position, width);
 
                             });
                         });

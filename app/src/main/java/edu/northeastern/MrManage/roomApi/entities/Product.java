@@ -27,7 +27,7 @@ public class Product {
     private Long customerId;
 
     @ColumnInfo(name = "quantity_in_inventory")
-    private Double quantityInInventor = 0.0;
+    private Double quantityInInventory = 0.0;
 
     @ColumnInfo(name = "quantity_delivered")
     private Double quantityDelivered = 0.0;
@@ -70,8 +70,8 @@ public class Product {
         return customerId;
     }
 
-    public Double getQuantityInInventor() {
-        return quantityInInventor;
+    public Double getQuantityInInventory() {
+        return quantityInInventory;
     }
 
     public Double getQuantityDelivered() {
@@ -98,8 +98,8 @@ public class Product {
         this.customerId = customerId;
     }
 
-    public void setQuantityInInventor(Double quantityInInventor) {
-        this.quantityInInventor = quantityInInventor;
+    public void setQuantityInInventory(Double quantityInInventory) {
+        this.quantityInInventory = quantityInInventory;
     }
 
     public void setQuantityDelivered(Double quantityDelivered) {

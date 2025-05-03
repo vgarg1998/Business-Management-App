@@ -1,7 +1,6 @@
 package edu.northeastern.MrManage.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,7 +31,7 @@ public class StocksHistoryActivity extends AppCompatActivity implements StocksHi
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         stockHistoryViewModel = new ViewModelProvider(this).get(StockHistoryViewModel.class);
-        adapter = new StocksHistoryAdapter(this, stockHistoryViewModel,this);
+        adapter = new StocksHistoryAdapter(this, stockHistoryViewModel, this);
         recyclerView.setAdapter(adapter);
 
         stockHistoryViewModel = new ViewModelProvider(this).get(StockHistoryViewModel.class);

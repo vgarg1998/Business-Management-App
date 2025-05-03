@@ -34,7 +34,7 @@ public interface OrderDao {
             "JOIN Product p ON o.product_id = p.product_id " +
             "JOIN User c ON p.customer_id = c.id " +
             "WHERE c.id = :customerId and o.stage=:stage")
-    LiveData<List<Order>> getOrdersByCustomer(Long customerId,int stage);
+    LiveData<List<Order>> getOrdersByCustomer(Long customerId, int stage);
 
     @Query("DELETE FROM `ORDER` WHERE order_id = :orderId")
     void deleteOrder(Long orderId);

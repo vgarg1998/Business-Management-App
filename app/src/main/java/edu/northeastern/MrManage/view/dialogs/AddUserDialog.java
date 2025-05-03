@@ -2,8 +2,6 @@ package edu.northeastern.MrManage.view.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,16 +27,12 @@ public class AddUserDialog {
     public static void showAddUserDialog(Context context, int width, boolean isCustomer) {
         Dialog addUserDialog = new Dialog(context);
         addUserDialog.setContentView(R.layout.add_user_layout);
-        addUserDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView userTypeBar = addUserDialog.findViewById(R.id.textView_user_type_bar);
         if (isCustomer) {
             userTypeBar.setText("ADD CUSTOMER");
         } else {
             userTypeBar.setText("ADD MANUFACTURER");
         }
-        // Set background to transparent
-        addUserDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        // Set the width of the dialog to match the width of the activity
         Window window = addUserDialog.getWindow();
         if (window != null) {
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();

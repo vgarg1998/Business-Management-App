@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.northeastern.MrManage.MainActivity;
 import edu.northeastern.MrManage.R;
 import edu.northeastern.MrManage.roomApi.entities.Order;
 import edu.northeastern.MrManage.roomApi.entities.Product;
@@ -53,7 +52,7 @@ public class ActiveOrderActivity extends AppCompatActivity {
         setContentView(R.layout.active_order_layout);
         customerSpinner = findViewById(R.id.customer_spinner);
         productSpinner = findViewById(R.id.product_spinner);
-        setCustomerSpinner(customerSpinner,this);
+        setCustomerSpinner(customerSpinner, this);
         // Initialize RecyclerView and Adapter before adding data
         activeOrderRecyclerView = findViewById(R.id.active_order_recycler_view);
 
@@ -82,7 +81,7 @@ public class ActiveOrderActivity extends AppCompatActivity {
                             Log.e("Active Order Activity", "Width is still 0 after layout.");
                         }
                     });
-                }else{
+                } else {
                     activeOrderAdapter.updateOrders(activeOrders);
                 }
             }
@@ -93,11 +92,11 @@ public class ActiveOrderActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 User customer = (User) parent.getSelectedItem();
-                if(customer!=null){
+                if (customer != null) {
                     ProductViewModel productViewModel = new ViewModelProvider(ActiveOrderActivity.this).get(ProductViewModel.class);
                     List<Product> productList = new ArrayList<>();
                     productList.add(new Product());
-                    productViewModel.getProducts(customer.getId()).observe(ActiveOrderActivity.this,products->{
+                    productViewModel.getProducts(customer.getId()).observe(ActiveOrderActivity.this, products -> {
                         productList.addAll(products);
                         ArrayAdapter<Product> adapter = new ArrayAdapter<>(
                                 getApplicationContext(),
@@ -135,7 +134,7 @@ public class ActiveOrderActivity extends AppCompatActivity {
             } else {
                 order.setReceivedQuantity(receivedQuantity);
                 activeOrderAdapter.updateOrder(position, order);
-                new ViewOrderDialog().showDialog(this, order, productName, customerName, numberOfShipments, receivedQuantity, position, width );
+                new ViewOrderDialog().showDialog(this, order, productName, customerName, numberOfShipments, receivedQuantity, position, width);
             }
 
 
@@ -151,7 +150,7 @@ public class ActiveOrderActivity extends AppCompatActivity {
         // Check if a customer is selected
         if (selectedCustomer != null) {
             // Fetch orders based on the selected product and customer
-            if (selectedProduct != null && productSpinner.getSelectedItemPosition()!=0) {
+            if (selectedProduct != null && productSpinner.getSelectedItemPosition() != 0) {
                 // Show orders for the selected customer and product
                 orderViewModel.getOrdersByProduct(selectedProduct.getProductId(), stage)
                         .observe(this, orders -> {
@@ -165,7 +164,7 @@ public class ActiveOrderActivity extends AppCompatActivity {
                         });
             } else {
                 // Show orders for the selected customer and all products
-                orderViewModel.getOrdersByCustomer(selectedCustomer.getId(),stage)
+                orderViewModel.getOrdersByCustomer(selectedCustomer.getId(), stage)
                         .observe(this, orders -> {
                             if (orders != null) {
                                 activeOrderAdapter.updateOrders(orders);
@@ -181,7 +180,7 @@ public class ActiveOrderActivity extends AppCompatActivity {
     }
 
     private static void setCustomerSpinner(Spinner spinner, Context context) {
-        UserViewModel userViewModel = new ViewModelProvider((ActiveOrderActivity)context).get(UserViewModel.class);
+        UserViewModel userViewModel = new ViewModelProvider((ActiveOrderActivity) context).get(UserViewModel.class);
         userViewModel.getAllCustomer().observe((ActiveOrderActivity) context, customers -> {
             ArrayAdapter<User> adapter = new ArrayAdapter<>(
                     context,

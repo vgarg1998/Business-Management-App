@@ -89,8 +89,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:hint="Number of bags"
-                        android:inputType="number"/>
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="Set Delivery Date" />
+                    android:text="ADD STOCKED DATE" />
 
                 <TextView
                     android:id="@+id/delivery_date_text"

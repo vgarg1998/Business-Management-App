@@ -110,7 +110,8 @@
                         android:id="@+id/order_quantity_input"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Order Quantity" />
+                        android:hint="Order Quantity"
+                        android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -119,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="Set Delivery Date" />
+                    android:text="Set Order Date" />
 
                 <TextView
                     android:id="@+id/delivery_date_text"

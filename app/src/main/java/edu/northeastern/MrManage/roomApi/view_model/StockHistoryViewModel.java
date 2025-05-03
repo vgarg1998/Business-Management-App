@@ -33,12 +33,16 @@ public class StockHistoryViewModel extends ViewModel {
     }
 
     public void insert(StockHistory stockHistory) {
-        executorService.submit(()->{repository.insert(stockHistory);});
+        executorService.submit(() -> {
+            repository.insert(stockHistory);
+        });
     }
 
 
     public void delete(StockHistory stockHistory) {
-        executorService.submit(()->{repository.deleteStockHistory(stockHistory);});
+        executorService.submit(() -> {
+            repository.deleteStockHistory(stockHistory);
+        });
     }
 
     public LiveData<String> getProductName(long productId) {

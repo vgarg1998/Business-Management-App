@@ -26,11 +26,10 @@
         <activity android:name="edu.northeastern.MrManage.view.activity.ManageUserActivity" />
         <activity android:name="edu.northeastern.MrManage.view.activity.CustomerProfileActivity" />
         <activity android:name=".view.activity.ActiveOrderActivity" />
-        <activity android:name=".view.activity.AddShipmentActivity" ></activity>
-            <activity android:name=".view.activity.DeliveryHistoryActivity"
-            />
-        <activity android:name=".view.activity.ReceivedOrderActivity"/>
-        <activity android:name=".view.activity.StocksHistoryActivity"/>
+        <activity android:name=".view.activity.AddShipmentActivity"></activity>
+        <activity android:name=".view.activity.DeliveryHistoryActivity" />
+        <activity android:name=".view.activity.ReceivedOrderActivity" />
+        <activity android:name=".view.activity.StocksHistoryActivity" />
     </application>
 
 </manifest>

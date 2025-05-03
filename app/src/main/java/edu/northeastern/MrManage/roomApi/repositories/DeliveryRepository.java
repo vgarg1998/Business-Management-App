@@ -1,9 +1,7 @@
 package edu.northeastern.MrManage.roomApi.repositories;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Query;
 import androidx.room.Transaction;
-import androidx.room.Update;
 
 import java.util.List;
 
@@ -25,37 +23,37 @@ public class DeliveryRepository {
     }
 
     @Transaction
-    public void insertDelivery(Delivery delivery){
+    public void insertDelivery(Delivery delivery) {
         deliveryDao.insertDelivery(delivery);
-        productDao.deleteStock(delivery.getProductId(),delivery.getNumberOfBags(),delivery.getTotalQuantityKg());
-        productDao.updateQuantityDelivered(delivery.getProductId(),delivery.getTotalQuantityKg());
-        productDao.updateNumberOfBagsDelivered(delivery.getProductId(),delivery.getNumberOfBags());
+        productDao.deleteStock(delivery.getProductId(), delivery.getNumberOfBags(), delivery.getTotalQuantityKg());
+        productDao.updateQuantityDelivered(delivery.getProductId(), delivery.getTotalQuantityKg());
+        productDao.updateNumberOfBagsDelivered(delivery.getProductId(), delivery.getNumberOfBags());
     }
 
-    public void updateDelivery(Delivery delivery){
+    public void updateDelivery(Delivery delivery) {
         deliveryDao.updateDelivery(delivery);
     }
 
     @Transaction
-    public void deleteDelivery(Delivery delivery){
+    public void deleteDelivery(Delivery delivery) {
         deliveryDao.deleteDelivery(delivery.getId());
-        productDao.updateStock(delivery.getProductId(),delivery.getNumberOfBags(),delivery.getTotalQuantityKg());
-        productDao.updateQuantityDelivered(delivery.getProductId(),-delivery.getTotalQuantityKg());
-        productDao.updateNumberOfBagsDelivered(delivery.getProductId(),-delivery.getNumberOfBags());
+        productDao.updateStock(delivery.getProductId(), delivery.getNumberOfBags(), delivery.getTotalQuantityKg());
+        productDao.updateQuantityDelivered(delivery.getProductId(), -delivery.getTotalQuantityKg());
+        productDao.updateNumberOfBagsDelivered(delivery.getProductId(), -delivery.getNumberOfBags());
     }
 
 
-    public LiveData<List<Delivery>> getDeliveriesByProductId(long productId){
+    public LiveData<List<Delivery>> getDeliveriesByProductId(long productId) {
         return deliveryDao.getDeliveriesByProductId(productId);
     }
 
 
-    public LiveData<List<Delivery>> getDeliveriesByDateRange(String startDate, String endDate){
-        return deliveryDao.getDeliveriesByDateRange(startDate,endDate);
+    public LiveData<List<Delivery>> getDeliveriesByDateRange(String startDate, String endDate) {
+        return deliveryDao.getDeliveriesByDateRange(startDate, endDate);
     }
 
 
-    public LiveData<List<Delivery>> getAllDeliveries(){
+    public LiveData<List<Delivery>> getAllDeliveries() {
         return deliveryDao.getAllDeliveries();
     }
 }

@@ -33,7 +33,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> 
         Product product = products.get(position);
         holder.productName.setText(product.getProductName());
         holder.deliveredQuantity.setText(String.valueOf(product.getQuantityDelivered()));
-        holder.inStockQuantity.setText(String.valueOf(product.getQuantityInInventor()));
+        holder.inStockQuantity.setText(String.valueOf(product.getQuantityInInventory()));
         holder.orderedQuantity.setText(String.valueOf(product.getQuantityInOrder()));
         holder.totalDeliveredBags.setText(String.valueOf(product.getNumberOfBagsDelivered()));
         holder.inStockBags.setText(String.valueOf(product.getNumberOfBagsInStock()));

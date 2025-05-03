@@ -27,8 +27,10 @@ public class OrderRepository {
     }
 
     // Insert an order
+    @Transaction
     public void insertOrder(Order order) {
         orderDao.insertOrder(order);
+        productDao.updateOrderedQuantity(order.getProductId(), order.getOrderedQuantity());
     }
 
     // Delete an order
@@ -36,25 +38,25 @@ public class OrderRepository {
         orderDao.updateReceivedQuantity(orderId, quantity);
     }
 
-    public void makeOrderReceived(Long orderId, Long currentDate){
+    public void makeOrderReceived(Long orderId, Long currentDate) {
         orderDao.makeOrderReceived(orderId, currentDate);
     }
 
-    public LiveData<List<Order>> getReceivedOrder(){
+    public LiveData<List<Order>> getReceivedOrder() {
         return orderDao.getReceivedOrder();
     }
 
     public LiveData<List<Order>> getOrdersByProduct(Long productId, int stage) {
-        return orderDao.getOrdersByProduct(productId,stage);
+        return orderDao.getOrdersByProduct(productId, stage);
     }
 
-    public LiveData<List<Order>> getOrdersByCustomer(Long customerId, int stage){
+    public LiveData<List<Order>> getOrdersByCustomer(Long customerId, int stage) {
         return orderDao.getOrdersByCustomer(customerId, stage);
     }
 
     @Transaction
     public void deleteOrder(Order order) {
         orderDao.deleteOrder(order.getOrderId());
-        productDao.updateOrderedQuantity(order.getOrderId(),order.getOrderedQuantity());
+        productDao.updateOrderedQuantity(order.getProductId(), -order.getOrderedQuantity());
     }
 }

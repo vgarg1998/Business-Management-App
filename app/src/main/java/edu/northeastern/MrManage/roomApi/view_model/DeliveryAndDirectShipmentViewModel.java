@@ -16,7 +16,7 @@ public class DeliveryAndDirectShipmentViewModel extends ViewModel {
         this.deliveryAndDirectShipmentsLiveData = deliveryAndDirectShipmentsRepository.getAllDeliveryAndDirectShipments();
     }
 
-    public LiveData<DeliveryAndDirectShipments> getDeliveryAndDirectShipments(){
+    public LiveData<DeliveryAndDirectShipments> getDeliveryAndDirectShipments() {
         return deliveryAndDirectShipmentsLiveData;
     }
 }

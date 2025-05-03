@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.northeastern.MrManage.R;
 import edu.northeastern.MrManage.roomApi.view_model.OrderViewModel;
-
 import edu.northeastern.MrManage.view.adapters.ReceivedOrderAdapter;
 
 @AndroidEntryPoint
@@ -32,12 +31,12 @@ public class ReceivedOrderActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         OrderViewModel orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
-        orderViewModel.getReceivedOrder().observe(this,receivedOrders->{
+        orderViewModel.getReceivedOrder().observe(this, receivedOrders -> {
             if (receivedOrders != null) {
                 if (receivedOrderAdapter == null) {
                     // Initialize adapter after receiving data
                     View rootView = getWindow().getDecorView().getRootView();
-                    receivedOrderAdapter = new ReceivedOrderAdapter(receivedOrders,this);
+                    receivedOrderAdapter = new ReceivedOrderAdapter(receivedOrders, this);
                     recyclerView.setAdapter(receivedOrderAdapter);
                 } else {
                     // Update existing adapter

@@ -1,9 +1,6 @@
 package edu.northeastern.MrManage.roomApi;
 
-import android.content.Context;
-
 import androidx.room.Database;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import edu.northeastern.MrManage.roomApi.dao.DeliveryDao;

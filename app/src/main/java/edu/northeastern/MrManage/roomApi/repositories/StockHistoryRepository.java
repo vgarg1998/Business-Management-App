@@ -1,7 +1,5 @@
 package edu.northeastern.MrManage.roomApi.repositories;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Transaction;
 
@@ -13,7 +11,6 @@ import javax.inject.Inject;
 
 import edu.northeastern.MrManage.roomApi.dao.ProductDao;
 import edu.northeastern.MrManage.roomApi.dao.StockHistoryDao;
-
 import edu.northeastern.MrManage.roomApi.entities.StockHistory;
 
 public class StockHistoryRepository {
@@ -39,14 +36,14 @@ public class StockHistoryRepository {
 
     @Transaction
     public void insert(StockHistory stockHistory) {
-       stockHistoryDao.insert(stockHistory);
-       productDao.updateStock(stockHistory.getProductId(), stockHistory.getNumberOfBags(),stockHistory.getQuantity());
+        stockHistoryDao.insert(stockHistory);
+        productDao.updateStock(stockHistory.getProductId(), stockHistory.getNumberOfBags(), stockHistory.getQuantity());
     }
 
     @Transaction
     public void deleteStockHistory(StockHistory stockHistory) {
-       stockHistoryDao.deleteStockHistory(stockHistory.getId());
-       productDao.deleteStock(stockHistory.getProductId(), stockHistory.getNumberOfBags(),stockHistory.getQuantity());
+        stockHistoryDao.deleteStockHistory(stockHistory.getId());
+        productDao.deleteStock(stockHistory.getProductId(), stockHistory.getNumberOfBags(), stockHistory.getQuantity());
     }
 
     public LiveData<String> getProductName(long productId) {

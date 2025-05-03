@@ -24,9 +24,9 @@ public class AddShipmentRunnable implements Runnable {
 
     ValidationListener validationListener;
 
-    public AddShipmentRunnable(Long orderId,Long productId, int shipmentType,String[] shipment, ShipmentViewModel shipmentViewModel,
+    public AddShipmentRunnable(Long orderId, Long productId, int shipmentType, String[] shipment, ShipmentViewModel shipmentViewModel,
                                OrderViewModel orderViewModel, ProductViewModel productViewModel
-            ,ValidationListener validationListener) {
+            , ValidationListener validationListener) {
         this.orderId = orderId;
         this.productId = productId;
         this.shipmentType = shipmentType;

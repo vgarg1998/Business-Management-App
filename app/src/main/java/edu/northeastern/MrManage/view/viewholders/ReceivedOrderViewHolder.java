@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import edu.northeastern.MrManage.R;
 
-public class ReceivedOrderViewHolder extends RecyclerView.ViewHolder{
+public class ReceivedOrderViewHolder extends RecyclerView.ViewHolder {
     public TextView productName;
     public TextView orderDate;
     public TextView orderQuantity;
@@ -19,6 +19,7 @@ public class ReceivedOrderViewHolder extends RecyclerView.ViewHolder{
     public TextView endDate;
 
     public TextView quantityAcquired;
+
     public ReceivedOrderViewHolder(@NonNull View itemView) {
         super(itemView);
         orderDate = itemView.findViewById(R.id.text_view_order_date);
